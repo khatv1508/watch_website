@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Label - Premium Responsive Bootstrap 4 Admin & Dashboard Template</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="../../../assets/vendors/iconfonts/mdi/css/materialdesignicons.css">
-    <link rel="stylesheet" href="../../../assets/vendors/css/vendor.addons.css">
+    <link rel="stylesheet" href="../../assets/vendors/iconfonts/mdi/css/materialdesignicons.css">
+    <link rel="stylesheet" href="../../assets/vendors/css/vendor.addons.css">
     <!-- endinject -->
     <!-- vendor css for this page -->
     <!-- End vendor css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="../../../assets/css/shared/style.css">
+    <link rel="stylesheet" href="../../assets/css/shared/style.css">
     <!-- endinject -->
     <!-- Layout style -->
-    <link rel="stylesheet" href="../../../assets/css/demo_1/style.css">
+    <link rel="stylesheet" href="../../assets/css/demo_1/style.css">
     <!-- Layout style -->
-    <link rel="shortcut icon" href="../../../assets/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
   </head>
   <body>
     <div class="error_page error_2">
@@ -30,13 +30,13 @@
     <!--page body ends -->
     <!-- SCRIPT LOADING START FORM HERE /////////////-->
     <!-- plugins:js -->
-    <script src="../../../assets/vendors/js/core.js"></script>
-    <script src="../../../assets/vendors/js/vendor.addons.js"></script>
+    <script src="../../assets/vendors/js/core.js"></script>
+    <script src="../../assets/vendors/js/vendor.addons.js"></script>
     <!-- endinject -->
     <!-- Vendor Js For This Page Ends-->
     <!-- Vendor Js For This Page Ends-->
     <!-- build:js -->
-    <script src="../../../assets/js/template.js"></script>
+    <script src="../../assets/js/template.js"></script>
     <!-- endbuild -->
   </body>
 </html>

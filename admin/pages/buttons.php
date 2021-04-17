@@ -1,3 +1,7 @@
+<?php
+  // Include settings file
+  require_once "../utils/auth.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

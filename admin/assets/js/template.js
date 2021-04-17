@@ -56,6 +56,13 @@ $('.navigation-menu li a', TemplateSidebar).each(function () {
   }
 });
 
+// $('.navigation-menu li a').on("click", function () {
+//   $('.navigation-menu li', TemplateSidebar).each(function () {
+//     $(this).removeClass("active");
+//   });
+//   $(this).parent().addClass("active");
+// });
+
 $(".btn.btn-refresh").on("click", function () {
   $(this).addClass("clicked");
   setTimeout(function () {
