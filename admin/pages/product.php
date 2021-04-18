@@ -1,8 +1,7 @@
 <?php
     require("./utils/settings.php");
-    $sql = "SELECT * from sanpham";
+    $sql = "SELECT * from sanpham ";
     $result=mysqli_query($conn,$sql);
-    $row=mysqli_fetch_assoc($result);
 ?>
 <div class="content-viewport">
     <nav aria-label="breadcrumb">
@@ -31,49 +30,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php while ($row) { ?>
-                            <tr>
-                                <td><?php echo $row["firstname"]; ?></td>
-                                <td><?php echo $row["lastname"]; ?></td>
-                                <td><?php echo $row["city"];?></td>
-                            </tr>
-                            <?php } ?>
-                                <tr>
-                                    <td>Water Bottle</td>
-                                    <td>874</td>
-                                    <td>$546</td>
-                                    <td>43%</td>
-                                    <td class="actions">
-                                        <i class="mdi mdi-dots-vertical"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Scissors</td>
-                                    <td>345</td>
-                                    <td>$124.99</td>
-                                    <td>31%</td>
-                                    <td class="actions">
-                                        <i class="mdi mdi-dots-vertical"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Rulers</td>
-                                    <td>257</td>
-                                    <td>$78.50</td>
-                                    <td>28%</td>
-                                    <td class="actions">
-                                        <i class="mdi mdi-dots-vertical"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>White Board</td>
-                                    <td>24</td>
-                                    <td>$1244</td>
-                                    <td>56%</td>
-                                    <td class="actions">
-                                        <i class="mdi mdi-dots-vertical"></i>
-                                    </td>
-                                </tr>
+                                <?php while ($row = $result->fetch_assoc()) { ?>   
+                                    <tr>
+                                        <td><?php echo $row["MaSP"]; ?></td>
+                                        <td><?php echo $row["HangSP"]; ?></td>
+                                        <td><?php echo $row["TenSP"];?></td>
+                                        <td><?php echo $row["Loai"]; ?></td>
+                                        <td><?php echo $row["SoLuong"]; ?></td>
+                                        <td><?php echo $row["DVT"];?></td>
+                                        <td class="actions">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
