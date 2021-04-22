@@ -19,6 +19,7 @@
     <!-- endinject -->
     <!-- Layout style -->
     <link rel="stylesheet" href="/assets/css/demo_1/style.css">
+    <link rel="stylesheet" href="/assets/css/demo_1/mycss.css">
     <!-- Layout style -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico" />
   </head>
@@ -75,7 +76,7 @@
             </a>
           </li>
           <li>
-            <a href="./pages/login.php">
+            <a href="ndex.php?page=login">
               <span class="link-title"> Đăng Xuất</span>
               <i class="mdi mdi-logout link-icon"></i>
             </a>
@@ -97,6 +98,9 @@
               case 'order':
                 include './pages/order.php';
                 break;  
+              case 'login':
+                include './pages/login.php';
+                break;    
               default: break;    
             }
           ?>

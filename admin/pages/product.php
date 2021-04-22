@@ -1,38 +1,128 @@
 <?php
     require("./utils/settings.php");
-    $sql = "SELECT sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soluong, nk.dvt, sp.giaSP
+    // do du lieu
+    $sql = "SELECT sp.idSP, sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soluong, nk.dvt, sp.giaSP
             FROM sanpham sp
             INNER JOIN nhapkho nk ON (sp.maSP = nk.maSp)";
     $result=mysqli_query($conn,$sql);
 
-    $maSP = ''; $hang = ''; $tenSP = ''; $xuatXu = ''; $kieuMay = ''; $loai = ''; $duongKinh = ''; 
-    $chatLieuVo = ''; $chatLieuDay = ''; $chatLieuKinh = ''; $doChiuNuoc = ''; $gia = '';
-
-    //Lấy giá trị POST từ form vừa submit
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if(isset($_POST["masp"])) { $masp = $_POST['masp']; }
-        if(isset($_POST["hangsp"])) { $hangsp = $_POST['hangsp']; }
-        if(isset($_POST["tensp"])) { $tensp = $_POST['tensp']; }
-        if(isset($_POST["xuatxu"])) { $xuatxu = $_POST['xuatxu']; }
-        if(isset($_POST["loai"])) { $loai = $_POST['loai']; }
-        if(isset($_POST["duongkinh"])) { $duongkinh = $_POST['duongkinh']; }
-        if(isset($_POST["chatlieuvo"])) { $chatlieuvo = $_POST['chatlieuvo']; }
-        if(isset($_POST["chatlieuday"])) { $chatlieuday = $_POST['chatlieuday']; }
-        if(isset($_POST["chatlieukinh"])) { $chatlieukinh = $_POST['chatlieukinh']; }
-        if(isset($_POST["dochiunuoc"])) { $dochiunuoc = $_POST['dochiunuoc']; }
-        if(isset($_POST["giasp"])) { $giasp = $_POST['giasp']; }
-    
-        // insert san pham
-        $insert = "INSERT INTO sanpham(maSP, hangSP, tenSP, xuatXu, kieuMay, loai, duongKinh, chatLieuVo, chatLieuDay, chatLieuKinh, doChiuNuoc, giaSP) 
-        VALUES ('$maSP','$hang','$tenSP','$xuatXu','$kieuMay','$loai','$duongKinh','$chatLieuVo','$chatLieuDay','$chatLieuKinh','$doChiuNuoc', '$gia');";
-    
-        if ($conn->query($insert) === TRUE) {
-            echo "Thêm dữ liệu thành công";
-        } else {
-            echo "Error: " . $insert . "<br>" . $connect->error;
-        }
+    $id = '';
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
     }
+    $type = isset($_GET['type']) ? $_GET['type'] : '';
+    switch($type){
+        case 'insert':
+            // them san pham
+            $maSP = ''; $hang = ''; $tenSP = ''; $xuatXu = ''; $kieuMay = ''; $loai = ''; 
+            $duongKinh = ''; $chatLieuVo = ''; $chatLieuDay = ''; $chatLieuKinh = ''; 
+            $doChiuNuoc = ''; $gia = ''; $soLuong = ''; $dvt = ''; $ngayNhap = '';
 
+            // Lấy giá trị POST từ form vừa submit
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if(isset($_POST["masp"])) { $maSP = $_POST['masp']; }
+                if(isset($_POST["hangsp"])) { $hang = $_POST['hangsp']; }
+                if(isset($_POST["tensp"])) { $tenSP = $_POST['tensp']; }
+                if(isset($_POST["xuatxu"])) { $xuatXu = $_POST['xuatxu']; }
+                if(isset($_POST["kieumay"])) { $kieuMay = $_POST['kieumay']; }
+                if(isset($_POST["loai"])) { $loai = $_POST['loai']; }
+                if(isset($_POST["duongkinh"])) { $duongKinh = $_POST['duongkinh']; }
+                if(isset($_POST["chatlieuvo"])) { $chatLieuVo = $_POST['chatlieuvo']; }
+                if(isset($_POST["chatlieuday"])) { $chatLieuDay = $_POST['chatlieuday']; }
+                if(isset($_POST["chatlieukinh"])) { $chatLieuKinh = $_POST['chatlieukinh']; }
+                if(isset($_POST["dochiunuoc"])) { $doChiuNuoc = $_POST['dochiunuoc']; }
+                if(isset($_POST["giasp"])) { $gia = $_POST['giasp']; }
+            
+                // insert san pham
+                $insert_product = "INSERT INTO sanpham(maSP, hangSP, tenSP, xuatXu, kieuMay, loai, duongKinh, chatLieuVo, chatLieuDay, chatLieuKinh, doChiuNuoc, giaSP) 
+                VALUES ('$maSP','$hang','$tenSP','$xuatXu','$kieuMay','$loai','$duongKinh','$chatLieuVo','$chatLieuDay','$chatLieuKinh','$doChiuNuoc', '$gia');";
+            
+                if ($result1=mysqli_query($conn, $insert_product) === TRUE ) {
+                    $idSP = $conn->insert_id;
+                    
+                    if(isset($_POST["soluong"])) { $soLuong = $_POST['soluong']; }
+                    if(isset($_POST["dvt"])) { $dvt = $_POST['dvt']; }
+                    if(isset($_POST["ngaynhap"])) { $ngayNhap = $_POST['ngaynhap']; }
+                    // insert nhap kho
+                    $inser_Warehouse ="INSERT INTO nhapkho(idSP, maSP, soluong, dvt, ngayNhap) VALUES ($idSP, '$maSP', $soLuong, '$dvt', '$ngayNhap');";
+                }
+
+                if ($result1=mysqli_query($conn, $inser_Warehouse) === TRUE ) {
+                    echo 
+                    '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Thêm sản phẩm thành công</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                } else {
+                    echo 
+                    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Đã xảy ra lỗi !!!</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                }
+                header('Location: /index.php?page=product');
+            }    
+            break;
+        case 'edit':
+            //update san pham
+            // if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            //     if(isset($_POST["giasp"])) { $gia = $_POST['giasp']; }
+            //     $update_product = "UPDATE sanpham 
+            //                         SET giaSP = '$gia' 
+            //                         WHERE idSP = ".$id;
+                
+            //     if ($result2=mysqli_query($conn, $update_product) === TRUE ) {
+            //         echo 
+            //         '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            //             <strong>Sửa sản phẩm thành công</strong>
+            //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //             <span aria-hidden="true">&times;</span>
+            //             </button>
+            //         </div>';
+            //     } else {
+            //         echo 
+            //         '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            //             <strong>Đã xảy ra lỗi !!!</strong>
+            //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //             <span aria-hidden="true">&times;</span>
+            //             </button>
+            //         </div>';
+            //     }
+            //     header('Location: /index.php?page=product');
+            // }     
+            echo $type; 
+            break;
+        case 'delete': 
+            // delete san pham
+            // $delete_product = "DELETE FROM sanpham WHERE id= ".$id;
+            // if ($result3=mysqli_query($conn, $delete_product) === TRUE ) {
+            //     echo 
+            //     '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            //         <strong>Xóa sản phẩm thành công</strong>
+            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //         <span aria-hidden="true">&times;</span>
+            //         </button>
+            //     </div>';
+            // } else {
+            //     echo 
+            //     '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            //         <strong>Đã xảy ra lỗi !!!</strong>
+            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //         <span aria-hidden="true">&times;</span>
+            //         </button>
+            //     </div>';
+            // }
+            // header('Location: /index.php?page=product');
+            echo $type;
+            break;
+        
+        default: 
+            break;           
+    }
 ?>
 <div class="content-viewport">
     <nav aria-label="breadcrumb">
@@ -47,6 +137,13 @@
         <div class="col-lg-12">
             <div class="grid">
                 <div class="item-wrapper">
+                    <div class="header-tool">
+                        <p class="grid-header">Danh Sách Sản Phẩm</p>
+                        <div class="btn btn-success has-icon btn-rounded">
+                            <i class="mdi mdi-plus"></i>
+                            <a href="/pages/edit.php?type=insert">Thêm Mới</a>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table info-table">
                             <thead>
@@ -71,149 +168,15 @@
                                         <td><?php echo $row["dvt"];?></td>
                                         <td><?php echo $row["giaSP"];?></td>
                                         <td class="actions">
-                                            <a href="./files/products/edit.php"><i class="mdi mdi-pencil"></i></a>
+                                            <a href="/pages/edit.php?id=<?=$row["idSP"];?>&type=edit"><i class="mdi mdi-pencil"></i></a>
                                         </td>
                                         <td class="actions">
-                                            <a href="#"><i class="mdi mdi-window-close"></i></a>
+                                            <a href="/pages/product.php?id=<?=$row["idSP"];?>&type=delete"><i class="mdi mdi-window-close"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="grid">
-                <div class="grid-body">
-                    <div class="item-wrapper">
-                        <div class="row mb-12">
-                            <p class="grid-header">Thêm Sản Phẩm</p>
-                            <div class="col-md-12">
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Mã Sản Phẩm</label>
-                                    </div>
-                                        <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="masp">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Thương Hiệu</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="hangsp">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Tên Sản Phẩm</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="tensp"> 
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Xuất Xứ</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="xuatxu">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Kiểu Máy</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="kieusp">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Loại</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="loai">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Đường Kính</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="duongkinh">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Chất Liệu Vỏ</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="chatlieuvo">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Chất Liệu Dây</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="chatlieuday">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Chất Liệu Kính</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="chatlieukinh">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Độ Chịu Nước</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="dochiunuoc">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <label>Giá</label>
-                                    </div>
-                                    <div class="col-md-5 showcase_content_area">
-                                        <input type="text" class="form-control" name="giasp">
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-6 showcase_content_area">
-                                        <div class="tm-product-img-dummy">
-                                            <i class="fas fa-cloud-upload-alt tm-upload-icon" onclick="document.getElementById('fileInput').click();"></i>
-                                        </div>
-                                        <div class="custom-file mt-3 mb-6">
-                                            <input id="fileInput" type="file" style="display:none;">
-                                            <input type="button" class="btn btn-primary btn-block" value="UPLOAD PRODUCT IMAGE" onclick="document.getElementById('fileInput').click();">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row showcase_row_area">
-                                    <div class="col-md-1 showcase_text_area">
-                                        <button type="submit" class="btn btn-primary btn-block"> Thêm </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="col-xl-6 col-lg-6 col-md-12  mb-4">
-                            <div class="tm-product-img-dummy">
-                                <i class="fas fa-cloud-upload-alt tm-upload-icon" onclick="document.getElementById('fileInput').click();"></i>
-                            </div>
-                            <div class="custom-file mt-3 mb-6">
-                                <input id="fileInput" type="file" style="display:none;">
-                                <input type="button" class="btn btn-primary btn-block" value="UPLOAD PRODUCT IMAGE" onclick="document.getElementById('fileInput').click();">
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
