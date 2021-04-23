@@ -1,14 +1,9 @@
-<?php  
-	require("../utils/connectDB.php");
-    $sql = "SELECT * from sanpham";
-    $result=mysqli_query($conn,$sql);
-?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watch shop | Shop</title>
+    <title>Watch Shop | Men's Watch</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -52,86 +47,79 @@
                             <a href="index.php"><img style="width: 300px;height: 200px" src="../assets/img/logo/logo.png" alt=""></a>
                         </div>
                         <!-- Main-menu -->
-                        <div  class="main-menu d-none d-lg-block">
+                        <div class="main-menu d-none d-lg-block">
                             <nav>                                                
                                 <ul id="navigation">  
                                     <li><a href="index.php">Home</a></li>
                                     <li><a href="shop.php">Shop</a></li>
                                     <li class="hot"><a href="shop.php">Product</a>
                                         <ul class="submenu">
-                                            <li><a href="menproduct.php">Men's watch</a></li>
-                                            <li><a href="womenproduct.php">Women's watch</a></li>
+                                            <li><a href="menproduct.php">Men's Watch</a></li>
+                                            <li><a href="womenproduct.php">Women's Watch</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="contact.php">Contact</a></li>
                                 </ul>
                             </nav>
                         </div>
+                        <!-- Header Right -->
                         <div class="header-right">
                             <ul>
                                 <li><a href="cart.php"><span class="flaticon-shopping-cart"></span></a> </li>
                             </ul>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Header End -->
     </header>
     <main>
-        <!-- Hero Area Start-->
         <div class="slider-area ">
             <div class="single-slider slider-height2 d-flex align-items-center">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>Watch Shop</h2>
+                                <h2>Contact</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Hero Area End-->
-        <!-- Latest Products Start -->
-        <div class="container">
-        <section class="popular-items latest-padding">
-                <!-- Nav Card -->
-                <div class="tab-content" id="nav-tabContent">
-                    <!-- card one -->
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <?php while ($row = $result ->fetch_assoc()){
-                            echo
-                                '
-                                    <div style="float:left;width:33.33%; height:700px; "class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                                        <div class="single-popular-items mb-50 text-center"> 
-                                                    <div style="width:300px;height:380px" class="popular-img">'.$row["img"].
-                                                    '<div class="img-cap">
-                                                            <span>Add to cart</span> 
-                                                        </div>
-                                                        <div class="favorit-items">
-                                                            <span class="flaticon-heart"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="popular-caption">
-                                                            <h3>' .$row["tenSP"].'('.$row["maSP"].')</h3>
-                                                            <h4>'.$row["giaSP"].'</h4>
-                                                            <span>'.$row["kieuMay"].'</span>
-                                             
-                                            </div>
-                                        </div>
-                                    </div>
-                                ';
-                         }
-                        ?>
-                    </div>
-                    <!-- Card two -->
-                    
-                </div>
-                <!-- End Nav Card -->
-            </div>
-        </section>
-    </div>
+        <div>
+            <hr/>
+            <h1 style="margin-left: 500px;">Lê Minh Đức</h1>
+            <span>
+                <img style="width: 30px;height: 30px;float: left;margin-left: 550px;" src="../assets/img/icon/facebook_ct.png">
+            </span>
+            <span><h3>www.facbook.com/Leminhduc123</h3></span>
+            <span>
+                <img style="width: 30px;height: 30px;float: left;margin-left: 550px;" src="../assets/img/icon/gmail_ct.png">
+            </span>
+            <span><h3>lmduc.19i@cit.udn.vn</h3></span>
+            <span>
+                <img style="width: 30px;height: 30px;float: left;margin-left: 550px;" src="../assets/img/icon/telephone_ct.png">
+            </span>
+            <span><h3>0887654321</h3></span>
+        </div>
+        <div>
+            <hr/>
+            <h1 style="margin-left: 500px;">Trương Vĩnh Kha</h1>
+            <span>
+                <img style="width: 30px;height: 30px;float: left;margin-left: 550px;" src="../assets/img/icon/facebook_ct.png">
+            </span>
+            <span><h3>www.facbook.com/Truongvinhkha123</h3></span>
+            <span>
+                <img style="width: 30px;height: 30px;float: left;margin-left: 550px;" src="../assets/img/icon/gmail_ct.png">
+            </span>
+            <span><h3>tvkha.19i@cit.udn.vn</h3></span>
+            <span>
+                <img style="width: 30px;height: 30px;float: left;margin-left: 550px;" src="../assets/img/icon/telephone_ct.png">
+            </span>
+            <span><h3>0123456788</h3></span>
+        </div>
     </main>
     <div class="pagecontact">
         <hr/>

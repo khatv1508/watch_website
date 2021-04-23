@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watch shop | Shop</title>
+    <title>Watch shop | Home</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="../assets/css/slick.css">
         <link rel="stylesheet" href="../assets/css/nice-select.css">
         <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/css/aos.css">
 </head>
 
 <body>
@@ -49,7 +50,7 @@
                     <div class="menu-wrapper">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.php"><img style="width: 300px;height: 200px" src="../assets/img/logo/logo.png" alt=""></a>
+                            <a href="index.php"><img style="width: 300px;height: 200px" src="../assets/img/logo/logo1.png" alt=""></a>
                         </div>
                         <!-- Main-menu -->
                         <div  class="main-menu d-none d-lg-block">
@@ -67,7 +68,7 @@
                                 </ul>
                             </nav>
                         </div>
-                        <div class="header-right">
+                       <div class="header-right">
                             <ul>
                                 <li><a href="cart.php"><span class="flaticon-shopping-cart"></span></a> </li>
                             </ul>
@@ -78,29 +79,63 @@
         <!-- Header End -->
     </header>
     <main>
-        <!-- Hero Area Start-->
         <div class="slider-area ">
-            <div class="single-slider slider-height2 d-flex align-items-center">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="hero-cap text-center">
-                                <h2>Watch Shop</h2>
+            <div class="slider-active">
+                <!-- Single Slider -->
+                <div class="single-slider slider-height d-flex align-items-center slide-bg">
+                    <div class="container">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <div class="hero__caption">
+                                    <h1 data-animation="fadeInRight" data-delay="0.4s" data-duration="2000ms">Select Your New Perfect Style</h1>
+                                    <!-- Hero-btn -->
+                                    <div class="hero__btn" data-animation="fadeInLeft" data-delay="0.8s" data-duration="2000ms">
+                                        <a href="shop.php" class="btn hero-btn">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay="0.4s">
+                                    <img style="height: 700px" src="../assets/img/banner/banner_index1.jpg" alt="" class=" heartbeat">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>  
             </div>
-        </div>
-        <!-- Hero Area End-->
-        <!-- Latest Products Start -->
+        </div> 
+             <div >
+                <img style="float: right; width: 810px;height: 600px; margin-right: 80px; " src="../assets/img/banner/banner2.png" 
+                    data-aos="fade-left"
+                    data-aos-offset="400"
+                    data-aos-easing="ease-in-sine" >
+                    <img style="width: 810px;height: 600px;margin-left: 80px;" src="../assets/img/banner/banner.png" 
+                    data-aos="fade-right"
+                    data-aos-offset="400"
+                    data-aos-easing="ease-in-sine" >
+            </div> 
+            <div>
+                <img style="width: 1640px;height: 700px;margin-top: 20px; margin-left: 80px" src="../assets/img/banner/banner_index.png" 
+                    data-aos="fade-up"
+                    data-aos-offset="400"
+                    data-aos-easing="ease-in-sine" >
+            </div> 
         <div class="container">
-        <section class="popular-items latest-padding">
-                <!-- Nav Card -->
-                <div class="tab-content" id="nav-tabContent">
-                    <!-- card one -->
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <?php while ($row = $result ->fetch_assoc()){
+            <div class="popular-items latest-padding">
+                <div class="container">
+                <div class="row product-btn justify-content-between mb-40">
+                    <div class="properties__button">
+                        <nav>                                                      
+                            <div> <h2>Men's Watch</h2>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            <?php
+                $sql = "SELECT * from sanpham WHERE Loai=N'Đồng hồ nam'";
+                $result=mysqli_query($conn,$sql);
+                for ($i=0; $i < 6; $i++){
+                    $row = $result ->fetch_assoc();
                             echo
                                 '
                                     <div style="float:left;width:33.33%; height:700px; "class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
@@ -123,15 +158,50 @@
                                     </div>
                                 ';
                          }
-                        ?>
-                    </div>
-                    <!-- Card two -->
-                    
-                </div>
-                <!-- End Nav Card -->
+            ?>
             </div>
-        </section>
-    </div>
+        </div>
+        <div class="container">
+            <div class="popular-items latest-padding">
+                <div class="container">
+                <div class="row product-btn justify-content-between mb-40">
+                    <div class="properties__button">
+                        <nav>                                                      
+                            <div> <h2>Women's Watch</h2>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            <?php
+                $sql = "SELECT * from sanpham WHERE Loai=N'Đồng hồ nữ'";
+                $result=mysqli_query($conn,$sql);
+                for ($i=0; $i < 6; $i++){
+                    $row = $result ->fetch_assoc();
+                            echo
+                                '
+                                    <div style="float:left;width:33.33%; height:700px; "class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                        <div class="single-popular-items mb-50 text-center"> 
+                                                    <div style="width:300px;height:380px" class="popular-img">'.$row["img"].
+                                                    '<div class="img-cap">
+                                                            <span>Add to cart</span> 
+                                                        </div>
+                                                        <div class="favorit-items">
+                                                            <span class="flaticon-heart"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="popular-caption">
+                                                            <h3>' .$row["tenSP"].'('.$row["maSP"].')</h3>
+                                                            <h4>'.$row["giaSP"].'</h4>
+                                                            <span>'.$row["kieuMay"].'</span>
+                                             
+                                            </div>
+                                        </div>
+                                    </div>
+                                ';
+                         }
+            ?>
+            </div>
+        </div>
     </main>
     <div class="pagecontact">
         <hr/>
@@ -189,7 +259,8 @@
     <script src="./../assets/js/jquery.validate.min.js"></script>
     <script src="./../assets/js/mail-script.js"></script>
     <script src="./../assets/js/jquery.ajaxchimp.min.js"></script>
-    
+    <script src="./../assets/js/aos.js"></script>
+    <script type="text/javascript">AOS.init();</script>
     <!-- Jquery Plugins, main Jquery -->	
     <script src="./../assets/js/plugins.js"></script>
     <script src="./../assets/js/main.js"></script>

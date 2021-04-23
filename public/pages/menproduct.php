@@ -1,6 +1,6 @@
 <?php  
 	require("../utils/connectDB.php");
-    $sql = "SELECT * from sanpham";
+    $sql = "SELECT * from sanpham WHERE Loai=N'Đồng hồ nam'";
     $result=mysqli_query($conn,$sql);
 ?>
 <!doctype html>
@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watch shop | Shop</title>
+    <title>Watch Shop | Men's Watch</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -52,22 +52,22 @@
                             <a href="index.php"><img style="width: 300px;height: 200px" src="../assets/img/logo/logo.png" alt=""></a>
                         </div>
                         <!-- Main-menu -->
-                        <div  class="main-menu d-none d-lg-block">
+                        <div class="main-menu d-none d-lg-block">
                             <nav>                                                
                                 <ul id="navigation">  
                                     <li><a href="index.php">Home</a></li>
                                     <li><a href="shop.php">Shop</a></li>
                                     <li class="hot"><a href="shop.php">Product</a>
                                         <ul class="submenu">
-                                            <li><a href="menproduct.php">Men's watch</a></li>
-                                            <li><a href="womenproduct.php">Women's watch</a></li>
+                                            <li><a href="menproduct.php">Men's Watch</a></li>
+                                            <li><a href="womenproduct.php">Women's Watch</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="contact.php">Contact</a></li>
                                 </ul>
                             </nav>
                         </div>
-                        <div class="header-right">
+                       <div class="header-right">
                             <ul>
                                 <li><a href="cart.php"><span class="flaticon-shopping-cart"></span></a> </li>
                             </ul>
@@ -85,7 +85,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>Watch Shop</h2>
+                                <h2>Men's Watch</h2>
                             </div>
                         </div>
                     </div>
@@ -96,11 +96,38 @@
         <!-- Latest Products Start -->
         <div class="container">
         <section class="popular-items latest-padding">
+            <div class="container">
+                <div class="row product-btn justify-content-between mb-40">
+                    <div class="properties__button">
+                        <!--Nav Button  -->
+                        <nav>                                                      
+                            <div> <h2>Product</h2>
+                            </div>
+                        </nav>
+                        <!--End Nav Button  -->
+                    </div>
+                    <!-- Grid and List view -->
+                    <div class="grid-list-view">
+                    </div>
+                    <!-- Select items -->
+                    <div class="select-this">
+                        <form action="#">
+                            <div class="select-itms">
+                                <select name="select" id="select1">
+                                    <option value="">40 per page</option>
+                                    <option value="">50 per page</option>
+                                    <option value="">60 per page</option>
+                                    <option value="">70 per page</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <!-- Nav Card -->
                 <div class="tab-content" id="nav-tabContent">
                     <!-- card one -->
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <?php while ($row = $result ->fetch_assoc()){
+                       <?php while ($row = $result ->fetch_assoc()){
                             echo
                                 '
                                     <div style="float:left;width:33.33%; height:700px; "class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
