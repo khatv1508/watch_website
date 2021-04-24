@@ -1,9 +1,10 @@
 <?php
     require("./utils/settings.php");
+    
     // do du lieu
     $sql = "SELECT sp.idSP, sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soluong, nk.dvt, sp.giaSP
             FROM sanpham sp
-            INNER JOIN nhapkho nk ON (sp.maSP = nk.maSp)";
+            LEFT JOIN nhapkho nk ON (sp.idSP = nk.idSP)";
     $result=mysqli_query($conn,$sql);
 
     $id = '';
@@ -37,7 +38,7 @@
                 $insert_product = "INSERT INTO sanpham(maSP, hangSP, tenSP, xuatXu, kieuMay, loai, duongKinh, chatLieuVo, chatLieuDay, chatLieuKinh, doChiuNuoc, giaSP) 
                 VALUES ('$maSP','$hang','$tenSP','$xuatXu','$kieuMay','$loai','$duongKinh','$chatLieuVo','$chatLieuDay','$chatLieuKinh','$doChiuNuoc', '$gia');";
             
-                if ($result1=mysqli_query($conn, $insert_product) === TRUE ) {
+                if ($result1 = mysqli_query($conn, $insert_product) === TRUE ) {
                     $idSP = $conn->insert_id;
                     
                     if(isset($_POST["soluong"])) { $soLuong = $_POST['soluong']; }
@@ -47,7 +48,7 @@
                     $inser_Warehouse ="INSERT INTO nhapkho(idSP, maSP, soluong, dvt, ngayNhap) VALUES ($idSP, '$maSP', $soLuong, '$dvt', '$ngayNhap');";
                 }
 
-                if ($result1=mysqli_query($conn, $inser_Warehouse) === TRUE ) {
+                if ($result2 = mysqli_query($conn, $inser_Warehouse) === TRUE ) {
                     echo 
                     '<div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>Thêm sản phẩm thành công</strong>
@@ -64,60 +65,82 @@
                         </button>
                     </div>';
                 }
-                header('Location: /index.php?page=product');
             }    
             break;
         case 'edit':
             //update san pham
-            // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //     if(isset($_POST["giasp"])) { $gia = $_POST['giasp']; }
-            //     $update_product = "UPDATE sanpham 
-            //                         SET giaSP = '$gia' 
-            //                         WHERE idSP = ".$id;
-                
-            //     if ($result2=mysqli_query($conn, $update_product) === TRUE ) {
-            //         echo 
-            //         '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            //             <strong>Sửa sản phẩm thành công</strong>
-            //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //             <span aria-hidden="true">&times;</span>
-            //             </button>
-            //         </div>';
-            //     } else {
-            //         echo 
-            //         '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            //             <strong>Đã xảy ra lỗi !!!</strong>
-            //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //             <span aria-hidden="true">&times;</span>
-            //             </button>
-            //         </div>';
-            //     }
-            //     header('Location: /index.php?page=product');
-            // }     
-            echo $type; 
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if(isset($_POST["masp"])) { $maSP = $_POST['masp']; }
+                if(isset($_POST["hangsp"])) { $hang = $_POST['hangsp']; }
+                if(isset($_POST["tensp"])) { $tenSP = $_POST['tensp']; }
+                if(isset($_POST["xuatxu"])) { $xuatXu = $_POST['xuatxu']; }
+                if(isset($_POST["kieumay"])) { $kieuMay = $_POST['kieumay']; }
+                if(isset($_POST["loai"])) { $loai = $_POST['loai']; }
+                if(isset($_POST["duongkinh"])) { $duongKinh = $_POST['duongkinh']; }
+                if(isset($_POST["chatlieuvo"])) { $chatLieuVo = $_POST['chatlieuvo']; }
+                if(isset($_POST["chatlieuday"])) { $chatLieuDay = $_POST['chatlieuday']; }
+                if(isset($_POST["chatlieukinh"])) { $chatLieuKinh = $_POST['chatlieukinh']; }
+                if(isset($_POST["dochiunuoc"])) { $doChiuNuoc = $_POST['dochiunuoc']; }
+                if(isset($_POST["giasp"])) { $gia = $_POST['giasp']; }
+
+                $update_product = "UPDATE sanpham 
+                                    SET maSP = '$maSP', 
+                                        hangSP = '$hang', 
+                                        tenSP = '$tenSP', 
+                                        xuatXu = '$xuatXu', 
+                                        kieumay = '$kieuMay', 
+                                        loai = '$loai', 
+                                        duongKinh = '$duongKinh', 
+                                        chatLieuVo = '$chatLieuVo', 
+                                        chatLieuDay = '$chatLieuDay', 
+                                        chatLieuKinh = '$chatLieuKinh', 
+                                        doChiuNuoc = '$doChiuNuoc', 
+                                        giaSP = '$gia' 
+                                    WHERE idSP = $id";
+                if ($result1=mysqli_query($conn, $update_product) === TRUE ) {
+                    echo 
+                    '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Sửa sản phẩm thành công</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                } else {
+                    echo 
+                    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Đã xảy ra lỗi !!!</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                }
+            }
             break;
-        case 'delete': 
-            // delete san pham
-            // $delete_product = "DELETE FROM sanpham WHERE id= ".$id;
-            // if ($result3=mysqli_query($conn, $delete_product) === TRUE ) {
-            //     echo 
-            //     '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            //         <strong>Xóa sản phẩm thành công</strong>
-            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //         <span aria-hidden="true">&times;</span>
-            //         </button>
-            //     </div>';
-            // } else {
-            //     echo 
-            //     '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            //         <strong>Đã xảy ra lỗi !!!</strong>
-            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //         <span aria-hidden="true">&times;</span>
-            //         </button>
-            //     </div>';
-            // }
-            // header('Location: /index.php?page=product');
-            echo $type;
+        case 'delete':
+            // delete nhap kho
+            $delete_Warehouse = "DELETE FROM nhapkho WHERE idSP = ".$id;
+            if (mysqli_query($conn, $delete_Warehouse) === TRUE ) {
+
+                // delete san pham
+                $delete_product = "DELETE FROM sanpham WHERE idSP = ".$id;
+            }
+            if (mysqli_query($conn, $delete_product) === TRUE ) {
+                echo 
+                '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Xóa sản phẩm thành công</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
+            } else {
+                echo 
+                '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Đã xảy ra lỗi !!!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
+            }
             break;
         
         default: 
@@ -139,9 +162,15 @@
                 <div class="item-wrapper">
                     <div class="header-tool">
                         <p class="grid-header">Danh Sách Sản Phẩm</p>
-                        <div class="btn btn-success has-icon btn-rounded">
-                            <i class="mdi mdi-plus"></i>
-                            <a href="/pages/edit.php?type=insert">Thêm Mới</a>
+                        <div>
+                            <div class="btn btn-refresh has-icon btn-rounded">
+                                <i class="mdi mdi-refresh"></i>
+                                <a href="#">Làm Mới</a>
+                            </div>
+                            <div class="btn btn-success has-icon btn-rounded">
+                                <i class="mdi mdi-plus"></i>
+                                <a href="/pages/edit.php?type=insert">Thêm Mới</a>
+                            </div>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -171,7 +200,7 @@
                                             <a href="/pages/edit.php?id=<?=$row["idSP"];?>&type=edit"><i class="mdi mdi-pencil"></i></a>
                                         </td>
                                         <td class="actions">
-                                            <a href="/pages/product.php?id=<?=$row["idSP"];?>&type=delete"><i class="mdi mdi-window-close"></i></a>
+                                            <a href="/pages/index.php?page=product&id=<?=$row["idSP"];?>&type=delete"><i class="mdi mdi-window-close"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

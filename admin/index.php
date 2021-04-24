@@ -76,8 +76,8 @@
             </a>
           </li>
           <li>
-            <a href="ndex.php?page=login">
-              <span class="link-title"> Đăng Xuất</span>
+            <a href="index.php?page=logout">
+              <span class="link-title">Đăng Xuất</span>
               <i class="mdi mdi-logout link-icon"></i>
             </a>
           </li>
@@ -98,8 +98,9 @@
               case 'order':
                 include './pages/order.php';
                 break;  
-              case 'login':
-                include './pages/login.php';
+              case 'logout':
+                // include './pages/login.php';
+                // header('Location: ./pages/login.php');
                 break;    
               default: break;    
             }

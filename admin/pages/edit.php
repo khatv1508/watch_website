@@ -13,14 +13,18 @@
                                     FROM sanpham sp
                                     INNER JOIN nhapkho nk ON (sp.idSP = nk.idSP)
                                     WHERE sp.idSP = ".$id;
-                $result=mysqli_query($conn,$select_product);
+                $result = mysqli_query($conn, $select_product);
                 $value = $result->fetch_object();
             }
+            
+            break;
+        case 'save':
+            header('Location: /index.php?page=product&type=edit');
             break;
         default:
             break;
     }    
-    
+    mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,7 +115,9 @@
                                 <div class="row mb-12">
                                     <p class="grid-header">Thêm Và Chỉnh Sửa Sản Phẩm </p>
                                     <div class="col-md-12">
-                                        <form action="/index.php?page=product&type=insert" method='POST'> 
+                                        <form action="<?php if($type == 'insert'){ ?>
+                                            /index.php?page=product&type=insert 
+                                            <?php } else { ?>/index.php?page=product&type=edit&id=<?=$id?><?php } ?>" method='POST'> 
                                             <?php if($type != 'insert'){ ?>
                                                 <div class="form-group row showcase_row_area">
                                                     <div class="col-md-1 showcase_text_area">
@@ -159,7 +165,7 @@
                                                     <label>Kiểu Máy</label>
                                                 </div>
                                                 <div class="col-md-5 showcase_content_area">
-                                                    <input type="text" class="form-control" name="kieusp" value='<?php echo(isset($value->kieuMay) ? $value->kieuMay : '') ?>'>
+                                                    <input type="text" class="form-control" name="kieumay" value='<?php echo(isset($value->kieuMay) ? $value->kieuMay : '') ?>'>
                                                 </div>
                                             </div>
                                             <div class="form-group row showcase_row_area">
@@ -207,7 +213,7 @@
                                                     <label>Độ Chịu Nước</label>
                                                 </div>
                                                 <div class="col-md-5 showcase_content_area">
-                                                    <input type="text" class="form-control" name="dochiunuoc" value='<?php echo(isset($value->dochiuNuoc) ? $value->dochiuNuoc : '') ?>'>
+                                                    <input type="text" class="form-control" name="dochiunuoc" value='<?php echo(isset($value->doChiuNuoc) ? $value->doChiuNuoc : '') ?>'>
                                                 </div>
                                             </div>
                                             <div class="form-group row showcase_row_area">
@@ -215,10 +221,10 @@
                                                     <label>Giá</label>
                                                 </div>
                                                 <div class="col-md-5 showcase_content_area">
-                                                    <input type="text" class="form-control" name="giasp" value='<?php echo(isset($value->giaSP) ? $value->giaSP : '') ?>'>
+                                                    <input type="number" class="form-control" name="giasp" value='<?php echo(isset($value->giaSP) ? $value->giaSP : '') ?>'>
                                                 </div>
                                             </div>
-                                            <?php if($type != 'edit'){ ?>
+                                            <?php if($type == 'edit'){ ?>
                                                 <div class="form-group row showcase_row_area">
                                                     <div class="col-md-1 showcase_text_area">
                                                         <label>Số Lượng</label>

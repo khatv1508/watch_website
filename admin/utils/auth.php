@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    // session_unset();
     
     // Check if the user is logged in, if not then redirect him to login page
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){

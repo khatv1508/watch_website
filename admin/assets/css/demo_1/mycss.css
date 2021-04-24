@@ -5,5 +5,14 @@
 }
 .header-tool a{
     text-decoration: none;
-    color: white;
+    color: black;
+}
+
+.header-tool .btn-refresh {
+    text-decoration: none;
+    background-color: #4CCEAC;
+}
+
+.header-tool .btn-success .mdi-plus {
+    color: black;
 }
