@@ -4,6 +4,32 @@
     $sql = "SELECT dh.tenKH, dh.sdt, dh.diaChi, dh.maSP, dh.tenSP, dh.soluong, dh.giaSP
             FROM dathang dh";
     $result=mysqli_query($conn,$sql);
+
+    $type = isset($_GET['type']) ? $_GET['type'] : '';
+    switch($type){
+        case 'check';
+            echo $type;
+            break;
+        case 'delete':
+                // echo 
+                // '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                //     <strong>Xóa sản phẩm thành công</strong>
+                //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                //     <span aria-hidden="true">&times;</span>
+                //     </button>
+                // </div>';
+                // echo 
+                // '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                //     <strong>Đã xảy ra lỗi !!!</strong>
+                //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                //     <span aria-hidden="true">&times;</span>
+                //     </button>
+                // </div>';
+                echo $type;
+            break;
+        default:
+            break;
+    }
 ?>
 <div class="content-viewport">
     <nav aria-label="breadcrumb">
@@ -44,10 +70,10 @@
                                         <td><?php echo $row["soluong"];?></td>
                                         <td><?php echo $row["giaSP"];?></td>
                                         <td class="actions">
-                                            <a href="#"><i class="mdi mdi-check"></i></a>
+                                            <a href="/pages/index.php?page=order&type=check"><i class="mdi mdi-check"></i></a>
                                         </td>
                                         <td class="actions">
-                                            <a href="#"><i class="mdi mdi-window-close"></i></a>
+                                            <a href="/pages/index.php?page=order&type=delete"><i class="mdi mdi-window-close"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -57,5 +83,10 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="pages">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
     </div>
 </div>
