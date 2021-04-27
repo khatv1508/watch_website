@@ -8,28 +8,60 @@
     $type = isset($_GET['type']) ? $_GET['type'] : '';
     switch($type){
         case 'check';
+            $idPhieu = ''; $tenKH = ''; $idSP = ''; $maSP = ''; $tenSP = ''; $soLuong = ''; $gia = ''; 
+            // insert hoa don 
+            // if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            //     if(isset($_POST["masp"])) { $maSP = $_POST['masp']; }
+            //     if(isset($_POST["tensp"])) { $tenSP = $_POST['tensp']; }
+            //     if(isset($_POST["giasp"])) { $gia = $_POST['giasp']; }
+
+            //     $insert_bill = "INSERT INTO hoadon(idPhieu, tenKH, idSP, maSP, tenSP, soluong, giaSP) VALUES ( $idPhieu, '$tenKH', $idSP, '$maSP', '$tenSP', $soLuong, $gia);"
+            //     if ($result2 = mysqli_query($conn, $insert_bill) === TRUE ) {
+            //         echo 
+            //         '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            //             <strong>Thêm sản phẩm thành công</strong>
+            //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //             <span aria-hidden="true">&times;</span>
+            //             </button>
+            //         </div>';
+            //     } else {
+            //         echo 
+            //         '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            //             <strong>Đã xảy ra lỗi !!!</strong>
+            //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //             <span aria-hidden="true">&times;</span>
+            //             </button>
+            //         </div>';
+            //     }
+            // }    
             echo $type;
             break;
         case 'delete':
-                // echo 
-                // '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                //     <strong>Xóa sản phẩm thành công</strong>
-                //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                //     <span aria-hidden="true">&times;</span>
-                //     </button>
-                // </div>';
-                // echo 
-                // '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                //     <strong>Đã xảy ra lỗi !!!</strong>
-                //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                //     <span aria-hidden="true">&times;</span>
-                //     </button>
-                // </div>';
-                echo $type;
+            // delete dat hang
+            // $delete_order = "DELETE FROM dathang WHERE idSP = ".$id;
+            // if (mysqli_query($conn, $delete_Warehouse) === TRUE ) {
+            //     echo 
+            //     '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            //         <strong>Xóa thành công</strong>
+            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //         <span aria-hidden="true">&times;</span>
+            //         </button>
+            //     </div>';
+            //     echo 
+            //     '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            //         <strong>Đã xảy ra lỗi !!!</strong>
+            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //         <span aria-hidden="true">&times;</span>
+            //         </button>
+            //     </div>';
+            // }
             break;
         default:
             break;
     }
+?>
+<?php
+    include("./pages/header.php");
 ?>
 <div class="content-viewport">
     <nav aria-label="breadcrumb">

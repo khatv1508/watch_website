@@ -22,10 +22,14 @@
     <link rel="stylesheet" href="/assets/css/demo_1/mycss.css">
     <!-- Layout style -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico" />
+    
   </head>
   <body class="header-fixed">
+    <?php
+      include("./pages/header.php");
+    ?>
     <!-- partial:partials/_header.html -->
-    <nav class="t-header">
+    <!-- <nav class="t-header">
       <div class="t-header-brand-wrapper">
         <a href="index.html"></a>
       </div>
@@ -42,7 +46,7 @@
           </form>
         </div>
       </div>
-    </nav>
+    </nav> -->
     <!-- partial -->
     <div class="page-body">
       <!-- partial:partials/_sidebar.html -->

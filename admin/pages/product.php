@@ -14,7 +14,6 @@
     $type = isset($_GET['type']) ? $_GET['type'] : '';
     switch($type){
         case 'insert':
-            // them san pham
             $maSP = ''; $hang = ''; $tenSP = ''; $xuatXu = ''; $kieuMay = ''; $loai = ''; 
             $duongKinh = ''; $chatLieuVo = ''; $chatLieuDay = ''; $chatLieuKinh = ''; 
             $doChiuNuoc = ''; $gia = ''; $soLuong = ''; $dvt = ''; $ngayNhap = '';
@@ -36,7 +35,7 @@
             
                 // insert san pham
                 $insert_product = "INSERT INTO sanpham(maSP, hangSP, tenSP, xuatXu, kieuMay, loai, duongKinh, chatLieuVo, chatLieuDay, chatLieuKinh, doChiuNuoc, giaSP) 
-                VALUES ('$maSP','$hang','$tenSP','$xuatXu','$kieuMay','$loai','$duongKinh','$chatLieuVo','$chatLieuDay','$chatLieuKinh','$doChiuNuoc', '$gia');";
+                VALUES ('$maSP','$hang','$tenSP','$xuatXu','$kieuMay','$loai','$duongKinh','$chatLieuVo','$chatLieuDay','$chatLieuKinh','$doChiuNuoc', $gia);";
             
                 if ($result1 = mysqli_query($conn, $insert_product) === TRUE ) {
                     $idSP = $conn->insert_id;
@@ -146,6 +145,24 @@
         default: 
             break;           
     }
+    $idPages = isset($_GET['idpages']) ? $_GET['idpages'] : '';
+    switch($idPages) {
+        case '1';
+            echo $idPages; 
+            break;
+        case '2';
+            echo $idPages;
+            break;
+        case '3';
+            echo $idPages;
+            break;
+
+        default:
+            break;    
+    }
+?>
+<?php
+    include("./pages/header.php");
 ?>
 <div class="content-viewport">
     <nav aria-label="breadcrumb">
@@ -212,8 +229,8 @@
         </div>
     </div>
     <div class="pages">
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
+        <a href="/pages/index.php?page=product&idpages=1">1</a>
+        <a href="/pages/index.php?page=product&idpages=2">2</a>
+        <a href="/pages/index.php?page=product&idpages=3">3</a>
     </div>
 </div>
