@@ -1,11 +1,24 @@
 <?php
     require("./utils/settings.php");
+    $perPage = 15;
+    $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
     
     // do du lieu
     $sql = "SELECT sp.idSP, sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soluong, nk.dvt, sp.giaSP
             FROM sanpham sp
-            LEFT JOIN nhapkho nk ON (sp.idSP = nk.idSP)";
-    $result=mysqli_query($conn,$sql);
+            LEFT JOIN nhapkho nk ON (sp.idSP = nk.idSP) 
+            LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
+    $result = mysqli_query($conn, $sql);
+
+    $sql = "SELECT sp.idSP, sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soluong, nk.dvt, sp.giaSP
+            FROM sanpham sp
+            LEFT JOIN nhapkho nk ON (sp.idSP = nk.idSP)"; 
+
+    $x = mysqli_query($conn, $sql);
+    $total = mysqli_num_rows($x);
+    $totalPage = ceil($total / $perPage);
+     
+    // exit;
 
     $id = '';
     if(isset($_GET['id'])){
@@ -97,6 +110,13 @@
                                         giaSP = '$gia' 
                                     WHERE idSP = $id";
                 if ($result1=mysqli_query($conn, $update_product) === TRUE ) {
+                    if(isset($_POST["soluong"])) { $soLuong = $_POST['soluong']; }
+
+                    $update_Warehouse = "UPDATE nhapkho 
+                                        SET soluong = '$soLuong'
+                                        WHERE idSP = $id";
+                }
+                if ($result2 = mysqli_query($conn, $update_Warehouse) === TRUE ) {
                     echo 
                     '<div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>Sửa sản phẩm thành công</strong>
@@ -145,21 +165,6 @@
         default: 
             break;           
     }
-    $idPages = isset($_GET['idpages']) ? $_GET['idpages'] : '';
-    switch($idPages) {
-        case '1';
-            echo $idPages; 
-            break;
-        case '2';
-            echo $idPages;
-            break;
-        case '3';
-            echo $idPages;
-            break;
-
-        default:
-            break;    
-    }
 ?>
 <?php
     include("./pages/header.php");
@@ -204,7 +209,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php while ($row = $result->fetch_assoc()) { ?>   
+                                <?php while ($row = mysqli_fetch_array($result)) { ?>   
                                     <tr>
                                         <td><?php echo $row["maSP"]; ?></td>
                                         <td><?php echo $row["hangSP"]; ?></td>
@@ -228,9 +233,22 @@
             </div>
         </div>
     </div>
-    <div class="pages">
-        <a href="/pages/index.php?page=product&idpages=1">1</a>
-        <a href="/pages/index.php?page=product&idpages=2">2</a>
-        <a href="/pages/index.php?page=product&idpages=3">3</a>
-    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <?php $class = (($page - 1) != 0) ? '' : "disabled"; ?>                          
+            <li class="page-item <?=$class?>">
+                <a class="page-link" href="/index.php?page=product&pageNum=<?=$page - 1?>">Previous</a> 
+            </li>
+
+            <?php for($i = 1; $i <= $totalPage; $i++){ 
+                    $activeClass = ($i == $page) ? 'active' : '';
+            ?>
+            <li class="page-item <?=$activeClass?>">
+                <a class="page-link" href="/index.php?page=product&pageNum=<?=$i?>"><?=$i?></a>
+            </li>
+            <?php } ?>
+            <?php $class = (($page + 1) <= $totalPage) ? '' : "disabled"; ?> 
+            <li class="page-item <?=$class?>"><a class="page-link" href="/index.php?page=product&pageNum=<?=$page + 1?>">Next</a></li>
+        </ul>
+    </nav>
 </div>

@@ -47,7 +47,7 @@
     </head>
     <body class="header-fixed">
         <?php
-        include("./pages/header.php");
+            include("../pages/header.php");
         ?>
         <!-- partial:partials/_header.html -->
         <!-- <nav class="t-header">
@@ -227,16 +227,14 @@
                                                     <input type="number" class="form-control" name="giasp" value='<?php echo(isset($value->giaSP) ? $value->giaSP : '') ?>'>
                                                 </div>
                                             </div>
-                                            <?php if($type == 'edit'){ ?>
-                                                <div class="form-group row showcase_row_area">
-                                                    <div class="col-md-1 showcase_text_area">
-                                                        <label>Số Lượng</label>
-                                                    </div>
-                                                    <div class="col-md-5 showcase_content_area">
-                                                        <input type="number" class="form-control" name="soluong" value='<?php echo(isset($value->soluong) ? $value->soluong : '') ?>'>
-                                                    </div>
+                                            <div class="form-group row showcase_row_area">
+                                                <div class="col-md-1 showcase_text_area">
+                                                    <label>Số Lượng</label>
                                                 </div>
-                                            <?php } ?>
+                                                <div class="col-md-5 showcase_content_area">
+                                                    <input type="number" class="form-control" name="soluong" value='<?php echo(isset($value->soluong) ? $value->soluong : '') ?>'>
+                                                </div>
+                                            </div>
                                             <?php if($type != 'edit'){ ?>
                                                 <div class="form-group row showcase_row_area">
                                                     <div class="col-md-1 showcase_text_area">

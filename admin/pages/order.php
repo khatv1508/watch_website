@@ -59,6 +59,21 @@
         default:
             break;
     }
+    $idPages = isset($_GET['idpages']) ? $_GET['idpages'] : '';
+    switch($idPages) {
+        case '1';
+            echo $idPages; 
+            break;
+        case '2';
+            echo $idPages;
+            break;
+        case '3';
+            echo $idPages;
+            break;
+
+        default:
+            break;    
+    }
 ?>
 <?php
     include("./pages/header.php");
@@ -117,8 +132,8 @@
         </div>
     </div>
     <div class="pages">
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
+        <a href="/pages/index.php?page=order&idpages=1">1</a>
+        <a href="/pages/index.php?page=order&idpages=2">2</a>
+        <a href="/pages/index.php?page=order&idpages=3">3</a>
     </div>
 </div>
