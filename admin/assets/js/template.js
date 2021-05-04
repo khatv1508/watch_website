@@ -68,7 +68,7 @@ $().ready(function() {
   });
 });
 
-$(".btn.btn-refresh").on("click", function () {
+$(".btn.btn-refresh-product").on("click", function () {
   window.location.href = '/index.php?page=product';
   // $(this).addClass("clicked");
   // setTimeout(function () {
@@ -76,6 +76,13 @@ $(".btn.btn-refresh").on("click", function () {
   // }, 3000);
 });
 
+$(".btn.btn-refresh-order").on("click", function () {
+  window.location.href = '/index.php?page=order';
+  // $(this).addClass("clicked");
+  // setTimeout(function () {
+  //   $(".btn.btn-refresh").removeClass("clicked");
+  // }, 3000);
+});
 
 $(".btn.btn-like").on("click", function () {
   $(this).toggleClass("clicked");

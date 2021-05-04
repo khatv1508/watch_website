@@ -1,15 +1,30 @@
 <?php
     require("./utils/settings.php");
+    $perPage = 10;
+    $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
 
-    $sql = "SELECT dh.tenKH, dh.sdt, dh.diaChi, dh.maSP, dh.tenSP, dh.soluong, dh.giaSP
+    $sql = "SELECT dh.*
+            FROM dathang dh
+            LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
+    $result = mysqli_query($conn, $sql);
+
+    $sql = "SELECT dh.*
             FROM dathang dh";
-    $result=mysqli_query($conn,$sql);
+
+    $x = mysqli_query($conn, $sql);
+    $total = mysqli_num_rows($x);
+    $totalPage = ceil($total / $perPage);
+
+    // $id = '';
+    // if(isset($_GET['id'])){
+    //     $id = $_GET['id'];
+    // }
 
     $type = isset($_GET['type']) ? $_GET['type'] : '';
     switch($type){
         case 'check';
-            $idPhieu = ''; $tenKH = ''; $idSP = ''; $maSP = ''; $tenSP = ''; $soLuong = ''; $gia = ''; 
-            // insert hoa don 
+            // $idPhieu = ''; $tenKH = ''; $idSP = ''; $maSP = ''; $tenSP = ''; $soLuong = ''; $gia = ''; 
+            // // insert hoa don 
             // if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //     if(isset($_POST["masp"])) { $maSP = $_POST['masp']; }
             //     if(isset($_POST["tensp"])) { $tenSP = $_POST['tensp']; }
@@ -19,7 +34,7 @@
             //     if ($result2 = mysqli_query($conn, $insert_bill) === TRUE ) {
             //         echo 
             //         '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            //             <strong>Thêm sản phẩm thành công</strong>
+            //             <strong>Thành công</strong>
             //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             //             <span aria-hidden="true">&times;</span>
             //             </button>
@@ -37,9 +52,16 @@
             echo $type;
             break;
         case 'delete':
+            // $select_order = "SELECT idPhieu FROM dathang";
+            // $result = mysqli_query($conn, $select_order);
+            // print_r($result);
+            // exit;
+
             // delete dat hang
-            // $delete_order = "DELETE FROM dathang WHERE idSP = ".$id;
-            // if (mysqli_query($conn, $delete_Warehouse) === TRUE ) {
+            // $delete_order = "DELETE FROM dathang WHERE idPhieu = ".$id;
+            // var_dump($delete_order, $id);
+            // exit;
+            // if (mysqli_query($conn, $delete_order) === TRUE ) {
             //     echo 
             //     '<div class="alert alert-success alert-dismissible fade show" role="alert">
             //         <strong>Xóa thành công</strong>
@@ -47,6 +69,7 @@
             //         <span aria-hidden="true">&times;</span>
             //         </button>
             //     </div>';
+            // } else {
             //     echo 
             //     '<div class="alert alert-danger alert-dismissible fade show" role="alert">
             //         <strong>Đã xảy ra lỗi !!!</strong>
@@ -55,24 +78,10 @@
             //         </button>
             //     </div>';
             // }
+            // header('Location: /pages/index.php?page=order');
             break;
         default:
             break;
-    }
-    $idPages = isset($_GET['idpages']) ? $_GET['idpages'] : '';
-    switch($idPages) {
-        case '1';
-            echo $idPages; 
-            break;
-        case '2';
-            echo $idPages;
-            break;
-        case '3';
-            echo $idPages;
-            break;
-
-        default:
-            break;    
     }
 ?>
 <?php
@@ -90,9 +99,16 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="grid">
-                <p class="grid-header">Đặt Hàng</p>
+                <div class="header-tool">
+                    <p class="grid-header">Đặt Hàng</p>
+                        <div>
+                            <div class="btn btn-refresh-order has-icon btn-rounded">
+                                <i class="mdi mdi-refresh"></i>
+                                <a href="#">Làm Mới</a>
+                            </div>
+                        </div>
+                    </div>
                 <div class="item-wrapper">
-                    <div class="table-responsive">
                     <div class="table-responsive">
                         <table class="table info-table">
                             <thead>
@@ -107,7 +123,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php while ($row = $result->fetch_assoc()) { ?>   
+                                <?php while ($row = mysqli_fetch_array($result)) { ?>   
                                     <tr>
                                         <td><?php echo $row["tenKH"]; ?></td>
                                         <td><?php echo $row["sdt"]; ?></td>
@@ -131,9 +147,22 @@
             </div>
         </div>
     </div>
-    <div class="pages">
-        <a href="/pages/index.php?page=order&idpages=1">1</a>
-        <a href="/pages/index.php?page=order&idpages=2">2</a>
-        <a href="/pages/index.php?page=order&idpages=3">3</a>
-    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <?php $class = (($page - 1) != 0) ? '' : "disabled"; ?>                          
+            <li class="page-item <?=$class?>">
+                <a class="page-link" href="/index.php?page=order&pageNum=<?=$page - 1?>">Previous</a> 
+            </li>
+
+            <?php for($i = 1; $i <= $totalPage; $i++){ 
+                    $activeClass = ($i == $page) ? 'active' : '';
+            ?>
+            <li class="page-item <?=$activeClass?>">
+                <a class="page-link" href="/index.php?page=order&pageNum=<?=$i?>"><?=$i?></a>
+            </li>
+            <?php } ?>
+            <?php $class = (($page + 1) <= $totalPage) ? '' : "disabled"; ?> 
+            <li class="page-item <?=$class?>"><a class="page-link" href="/index.php?page=order&pageNum=<?=$page + 1?>">Next</a></li>
+        </ul>
+    </nav>
 </div>

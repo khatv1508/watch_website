@@ -17,8 +17,6 @@
     $x = mysqli_query($conn, $sql);
     $total = mysqli_num_rows($x);
     $totalPage = ceil($total / $perPage);
-     
-    // exit;
 
     $id = '';
     if(isset($_GET['id'])){
@@ -185,7 +183,7 @@
                     <div class="header-tool">
                         <p class="grid-header">Danh Sách Sản Phẩm</p>
                         <div>
-                            <div class="btn btn-refresh has-icon btn-rounded">
+                            <div class="btn btn-refresh-product has-icon btn-rounded">
                                 <i class="mdi mdi-refresh"></i>
                                 <a href="#">Làm Mới</a>
                             </div>

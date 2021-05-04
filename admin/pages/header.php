@@ -1,6 +1,6 @@
 <nav class="t-header">
     <div class="t-header-brand-wrapper">
-    <a href="index.html"></a>
+    <a href="index.php"></a>
     </div>
     <div class="t-header-content-wrapper">
     <div class="t-header-content">
