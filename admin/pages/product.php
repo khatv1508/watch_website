@@ -59,6 +59,9 @@
                 }
 
                 if ($result2 = mysqli_query($conn, $inser_Warehouse) === TRUE ) {
+                    // $idSP = $conn->insert_id;
+
+                    // if(isset($_POST["soluong"])) { $soLuong = $_POST['soluong']; }
                     echo 
                     '<div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>Thêm sản phẩm thành công</strong>

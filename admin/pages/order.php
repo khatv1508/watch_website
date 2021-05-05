@@ -5,6 +5,7 @@
 
     $sql = "SELECT dh.*
             FROM dathang dh
+            WHERE trangThai = 1
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
@@ -15,70 +16,73 @@
     $total = mysqli_num_rows($x);
     $totalPage = ceil($total / $perPage);
 
-    // $id = '';
-    // if(isset($_GET['id'])){
-    //     $id = $_GET['id'];
-    // }
+    $id = '';
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+    }
 
     $type = isset($_GET['type']) ? $_GET['type'] : '';
     switch($type){
         case 'check';
-            // $idPhieu = ''; $tenKH = ''; $idSP = ''; $maSP = ''; $tenSP = ''; $soLuong = ''; $gia = ''; 
-            // // insert hoa don 
-            // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //     if(isset($_POST["masp"])) { $maSP = $_POST['masp']; }
-            //     if(isset($_POST["tensp"])) { $tenSP = $_POST['tensp']; }
-            //     if(isset($_POST["giasp"])) { $gia = $_POST['giasp']; }
+            $tenKH = ''; $idSP = ''; $maSP = ''; $tenSP = ''; $soLuong = ''; $gia = ''; 
+            // get thong don hang
+            $select_order = "SELECT dh.*
+                    FROM dathang dh
+                    WHERE idPhieu = ".$id; 
+            $result = mysqli_query($conn, $select_order); 
+            $value = $result->fetch_object();      
+            
 
-            //     $insert_bill = "INSERT INTO hoadon(idPhieu, tenKH, idSP, maSP, tenSP, soluong, giaSP) VALUES ( $idPhieu, '$tenKH', $idSP, '$maSP', '$tenSP', $soLuong, $gia);"
-            //     if ($result2 = mysqli_query($conn, $insert_bill) === TRUE ) {
-            //         echo 
-            //         '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            //             <strong>Thành công</strong>
-            //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //             <span aria-hidden="true">&times;</span>
-            //             </button>
-            //         </div>';
-            //     } else {
-            //         echo 
-            //         '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            //             <strong>Đã xảy ra lỗi !!!</strong>
-            //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //             <span aria-hidden="true">&times;</span>
-            //             </button>
-            //         </div>';
-            //     }
-            // }    
-            echo $type;
+            $insert_bill = "INSERT INTO hoadon(idPhieu, tenKH, idSP, maSP, tenSP, soluong, giaSP) 
+                            VALUES ( $id, '$value->tenKH', $value->idSP, '$value->maSP', '$value->tenSP', $value->soluong, $value->giaSP);";
+            // var_dump($insert_bill);
+            // exit;
+            if (mysqli_query($conn, $insert_bill) === TRUE ) {
+                // update trang thai
+                $update_product = "UPDATE dathang 
+                                    SET trangThai = 0 
+                                    WHERE idPhieu = ".$id;
+
+                if (mysqli_query($conn, $update_product) === TRUE){
+                    echo 
+                    '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Thành công</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                } else {
+                    echo 
+                    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Đã xảy ra lỗi !!!</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                }
+            }
             break;
         case 'delete':
-            // $select_order = "SELECT idPhieu FROM dathang";
-            // $result = mysqli_query($conn, $select_order);
-            // print_r($result);
-            // exit;
+            //delete dat hang
+            $delete_order = "DELETE FROM dathang WHERE idPhieu = ".$id;
 
-            // delete dat hang
-            // $delete_order = "DELETE FROM dathang WHERE idPhieu = ".$id;
-            // var_dump($delete_order, $id);
-            // exit;
-            // if (mysqli_query($conn, $delete_order) === TRUE ) {
-            //     echo 
-            //     '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            //         <strong>Xóa thành công</strong>
-            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //         <span aria-hidden="true">&times;</span>
-            //         </button>
-            //     </div>';
-            // } else {
-            //     echo 
-            //     '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            //         <strong>Đã xảy ra lỗi !!!</strong>
-            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //         <span aria-hidden="true">&times;</span>
-            //         </button>
-            //     </div>';
-            // }
-            // header('Location: /pages/index.php?page=order');
+            if (mysqli_query($conn, $delete_order) === TRUE ) {
+                echo 
+                '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Xóa thành công</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
+            } else {
+                echo 
+                '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Đã xảy ra lỗi !!!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
+            }
             break;
         default:
             break;
@@ -133,10 +137,10 @@
                                         <td><?php echo $row["soluong"];?></td>
                                         <td><?php echo $row["giaSP"];?></td>
                                         <td class="actions">
-                                            <a href="/pages/index.php?page=order&type=check"><i class="mdi mdi-check"></i></a>
+                                            <a href="/pages/index.php?page=order&type=check&id=<?=$row["idPhieu"]?>"><i class="mdi mdi-check"></i></a>
                                         </td>
                                         <td class="actions">
-                                            <a href="/pages/index.php?page=order&type=delete"><i class="mdi mdi-window-close"></i></a>
+                                            <a href="/pages/index.php?page=order&type=delete&id=<?=$row["idPhieu"]?>"><i class="mdi mdi-window-close"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

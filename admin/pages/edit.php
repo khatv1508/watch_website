@@ -42,6 +42,7 @@
         <!-- endinject -->
         <!-- Layout style -->
         <link rel="stylesheet" href="/assets/css/demo_1/style.css">
+        <link rel="stylesheet" href="/assets/css/demo_1/mycss.css">
         <!-- Layout style -->
         <link rel="shortcut icon" href="/assets/images/favicon.ico" />
     </head>
@@ -49,25 +50,6 @@
         <?php
             include("../pages/header.php");
         ?>
-        <!-- partial:partials/_header.html -->
-        <!-- <nav class="t-header">
-            <div class="t-header-brand-wrapper">
-                <a href="index.html"></a>
-            </div>
-            <div class="t-header-content-wrapper">
-                <div class="t-header-content">
-                <button class="t-header-toggler t-header-mobile-toggler d-block d-lg-none">
-                    <i class="mdi mdi-menu"></i>
-                </button>
-                <form action="#" class="t-header-search-box">
-                    <div class="input-group">
-                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search" autocomplete="off">
-                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-arrow-right-thick"></i></button>
-                    </div>
-                </form>
-                </div>
-            </div>
-        </nav> -->
         <!-- partial -->
         <div class="page-body">
             <!-- partial:partials/_sidebar.html -->
@@ -101,6 +83,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="index.php?page=bill">
+                    <span class="link-title">Hóa Đơn</span>
+                    <i class="mdi mdi-clipboard-text link-icon"></i>
+                    </a>
+                </li>
+                <li>
                     <a href="ndex.php?page=login">
                     <span class="link-title"> Đăng Xuất</span>
                     <i class="mdi mdi-logout link-icon"></i>
@@ -117,6 +105,12 @@
                                 <div class="item-wrapper">
                                     <div class="row mb-12">
                                         <p class="grid-header">Thêm Và Chỉnh Sửa Sản Phẩm </p>
+                                        <div>
+                                            <div class="btn btn-back has-icon btn-rounded">
+                                                <i class="mdi mdi-keyboard-return"></i>
+                                                <a href="/index.php?page=product">Quay Lại</a>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12">
                                             <form action="<?php if($type == 'insert'){ ?>
                                                 /index.php?page=product&type=insert 
@@ -266,12 +260,22 @@
                                                         </div>
                                                     </div>
                                                 </div> -->
+
+                                                <!-- <div class="form-group row showcase_row_area">
+                                                    <div class="col-md-1 showcase_text_area">
+                                                        <label>Hình Ảnh</label>
+                                                    </div>
+                                                    <div class="col-md-5 showcase_content_area">
+                                                        <input type="file" name="file">
+                                                    </div>
+                                                </div> -->
+                                                
                                                 <div class="form-group row showcase_row_area">
                                                     <div class="col-md-1 showcase_text_area">
-                                                        <button type="submit" class="btn btn-primary btn-block"> Thêm </button>
+                                                        <button type="submit" class="btn btn-primary btn-block">Thêm</button>
                                                     </div>
                                                     <div class="col-md-1 showcase_text_area">
-                                                        <button type="submit" class="btn btn-primary btn-block"> Lưu </button>
+                                                        <button type="submit" class="btn btn-primary btn-block">Lưu</button>
                                                     </div>
                                                 </div>
                                             </form>

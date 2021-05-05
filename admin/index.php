@@ -80,7 +80,13 @@
             </a>
           </li>
           <li>
-            <a href="index.php?page=logout">
+            <a href="index.php?page=bill">
+              <span class="link-title">Hóa Đơn</span>
+              <i class="mdi mdi-clipboard-text link-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="./pages/logout.php">
               <span class="link-title">Đăng Xuất</span>
               <i class="mdi mdi-logout link-icon"></i>
             </a>
@@ -102,9 +108,12 @@
               case 'order':
                 include './pages/order.php';
                 break;  
+              case 'bill':
+                include './pages/bill.php';
+                break;
               case 'logout':
                 // include './pages/login.php';
-                // header('Location: ./pages/login.php');
+                // header('Location: ./pages/logout.php');
                 break;    
               default: break;    
             }
