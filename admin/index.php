@@ -19,12 +19,17 @@
     <!-- endinject -->
     <!-- Layout style -->
     <link rel="stylesheet" href="/assets/css/demo_1/style.css">
+    <link rel="stylesheet" href="/assets/css/demo_1/mycss.css">
     <!-- Layout style -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico" />
+    
   </head>
   <body class="header-fixed">
+    <?php
+      include("./pages/header.php");
+    ?>
     <!-- partial:partials/_header.html -->
-    <nav class="t-header">
+    <!-- <nav class="t-header">
       <div class="t-header-brand-wrapper">
         <a href="index.html"></a>
       </div>
@@ -41,7 +46,7 @@
           </form>
         </div>
       </div>
-    </nav>
+    </nav> -->
     <!-- partial -->
     <div class="page-body">
       <!-- partial:partials/_sidebar.html -->
@@ -75,8 +80,14 @@
             </a>
           </li>
           <li>
-            <a href="./pages/login.php">
-              <span class="link-title"> Đăng Xuất</span>
+            <a href="index.php?page=bill">
+              <span class="link-title">Hóa Đơn</span>
+              <i class="mdi mdi-clipboard-text link-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="./pages/logout.php">
+              <span class="link-title">Đăng Xuất</span>
               <i class="mdi mdi-logout link-icon"></i>
             </a>
           </li>
@@ -97,6 +108,13 @@
               case 'order':
                 include './pages/order.php';
                 break;  
+              case 'bill':
+                include './pages/bill.php';
+                break;
+              case 'logout':
+                // include './pages/login.php';
+                // header('Location: ./pages/logout.php');
+                break;    
               default: break;    
             }
           ?>
