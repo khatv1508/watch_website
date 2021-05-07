@@ -6,6 +6,10 @@ RewriteBase /
 RewriteCond %{DOCUMENT_ROOT}/admin/$1 -f
 RewriteRule ^(.*)$ admin/$1 [L]
 
+RewriteCond %{DOCUMENT_ROOT}/public/$1 -f
+RewriteRule ^(.*)$ public/$1 [L]
+
 RewriteCond %{THE_REQUEST} \s/admin/ [NC,OR]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L,QSA]
+
