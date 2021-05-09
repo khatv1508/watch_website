@@ -69,37 +69,17 @@
         }
     }
     if (!empty( $_SESSION["cart"])) {
-        $sql = "SELECT * from sanpham WHERE idSP in (".implode(",", array_keys($_SESSION["cart"])).")";
+        $sql = "SELECT * from sanpham sp LEFT JOIN anhsanpham asp ON (sp.idSP = asp.idSP) WHERE sp.idSP in (".implode(",", array_keys($_SESSION["cart"])).")";
         $result=mysqli_query($conn,$sql);
     }
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Watch Shop | Men's Watch</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
-
-    <!-- CSS here -->
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="../assets/css/flaticon.css">
-        <link rel="stylesheet" href="../assets/css/slicknav.css">
-        <link rel="stylesheet" href="../assets/css/animate.min.css">
-        <link rel="stylesheet" href="../assets/css/magnific-popup.css">
-        <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="../assets/css/themify-icons.css">
-        <link rel="stylesheet" href="../assets/css/slick.css">
-        <link rel="stylesheet" href="../assets/css/nice-select.css">
-        <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-
+<?php include("../pages/header.html"); ?>
 <body>
-    <?php include("../pages/header.html"); ?>
     <main>
         <div class="slider-area ">
             <div class="single-slider slider-height2 d-flex align-items-center">
@@ -147,7 +127,7 @@
                                 <tr>
                                     <td><?= $num;?></td>
                                     <td><?= $row['tenSP']?></td>
-                                    <td><?=$row['img'];?></td>
+                                    <td><?=$row['urlImage'];?></td>
                                     <td><?= number_format($row['giaSP'], 0,",",".")?> VND</td>
                                     <td><input style="text-align: center;" size="2" type="text" value="<?=$_SESSION["cart"] [$row['idSP']]?>" name="soluong[<?= $row['idSP']?>]"></td>
                                     <td><?= number_format($row['giaSP']*$_SESSION["cart"] [$row['idSP']], 0,",",".")?> VND</td>
