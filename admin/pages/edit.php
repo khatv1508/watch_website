@@ -9,7 +9,7 @@
             $id = '';
             if(isset($_GET['id'])){
                 $id = $_GET['id'];
-                $select_product = "SELECT sp.* , nk.soluong, nk.dvt
+                $select_product = "SELECT sp.* , nk.soLuong, nk.dvt
                                     FROM sanpham sp
                                     INNER JOIN nhapkho nk ON (sp.idSP = nk.idSP)
                                     WHERE sp.idSP = ".$id;
@@ -226,7 +226,7 @@
                                                         <label>Số Lượng</label>
                                                     </div>
                                                     <div class="col-md-5 showcase_content_area">
-                                                        <input type="number" class="form-control" name="soluong" value='<?php echo(isset($value->soluong) ? $value->soluong : '') ?>'>
+                                                        <input type="number" class="form-control" name="soLuong" value='<?php echo(isset($value->soLuong) ? $value->soLuong : '') ?>'>
                                                     </div>
                                                 </div>
                                                 <?php if($type != 'edit'){ ?>

@@ -3,13 +3,19 @@
     $perPage = 10;
     $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
 
-    $sql = "SELECT hd.*
+    $sql = "SELECT dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, (dh.tongSoLuong * dh.tongTien) AS giaSP
             FROM hoadon hd
+            INNER JOIN dathang dh ON (hd.idPhieu = dh.idPhieu)
+            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
-    $sql = "SELECT hd.*
-            FROM hoadon hd";
+    $sql = "SELECT dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, (dh.tongSoLuong * dh.tongTien) AS giaSP
+            FROM hoadon hd
+            INNER JOIN dathang dh ON (hd.idPhieu = dh.idPhieu)
+            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)";
 
     $x = mysqli_query($conn, $sql);
     $total = mysqli_num_rows($x);
@@ -45,23 +51,20 @@
                             <thead>
                                 <tr>
                                     <th>Tên Khách Hàng</th>
-                                    <th>Mã Sản Phẩm</th>
-                                    <th>Tên Sản Phẩm</th>
+                                    <th>Số ĐT</th>
+                                    <th>Địa Chỉ</th>
                                     <th>Số Lượng</th>
-                                    <th>Giá Sản Phẩm </th>
+                                    <th>Tổng Tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php while ($row = mysqli_fetch_array($result)) { ?>   
                                     <tr>
                                         <td><?php echo $row["tenKH"]; ?></td>
-                                        <td><?php echo $row["maSP"]; ?></td>
-                                        <td><?php echo $row["tenSP"];?></td>
-                                        <td><?php echo $row["soluong"]; ?></td>
+                                        <td><?php echo $row["sdt"]; ?></td>
+                                        <td><?php echo $row["diaChi"];?></td>
+                                        <td><?php echo $row["soLuong"]; ?></td>
                                         <td><?php echo $row["giaSP"];?></td>
-                                        <!-- <td class="actions">
-                                            <a href="/pages/view.php?id=<?=$row["idHoaDon"];?>"><i class="mdi mdi-eye"></i></a>
-                                        </td> -->
                                     </tr>
                                 <?php } ?>
                             </tbody>

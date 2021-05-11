@@ -3,14 +3,20 @@
     $perPage = 10;
     $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
 
-    $sql = "SELECT dh.*
-            FROM dathang dh
+    $sql = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, sp.maSP, sp.tenSP, dh.tongSoLuong, 
+                    (dh.tongSoLuong * dh.tongTien) AS giaSP, dh.trangThai
+            FROM dathang dh 
+            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)
             WHERE trangThai = 1
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
-    $sql = "SELECT dh.*
-            FROM dathang dh";
+    $sql = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, sp.maSP, sp.tenSP, dh.tongSoLuong, 
+                    (dh.tongSoLuong * dh.tongTien) AS giaSP, dh.trangThai
+            FROM dathang dh 
+            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)";
 
     $x = mysqli_query($conn, $sql);
     $total = mysqli_num_rows($x);
@@ -24,17 +30,19 @@
     $type = isset($_GET['type']) ? $_GET['type'] : '';
     switch($type){
         case 'check';
-            $tenKH = ''; $idSP = ''; $maSP = ''; $tenSP = ''; $soLuong = ''; $gia = ''; 
+            $idSP = ''; 
             // get thong don hang
-            $select_order = "SELECT dh.*
-                    FROM dathang dh
-                    WHERE idPhieu = ".$id; 
+            $select_order = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, 
+                                    (dh.soLuong * dh.tongTien) AS giaSP, dh.trangThai
+                            FROM dathang dh 
+                            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+                            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)
+                            WHERE dh.idPhieu = ".$id; 
             $result = mysqli_query($conn, $select_order); 
-            $value = $result->fetch_object();      
-            
+            $value = $result->fetch_object();
 
-            $insert_bill = "INSERT INTO hoadon(idPhieu, tenKH, idSP, maSP, tenSP, soluong, giaSP) 
-                            VALUES ( $id, '$value->tenKH', $value->idSP, '$value->maSP', '$value->tenSP', $value->soluong, $value->giaSP);";
+            $insert_bill = "INSERT INTO hoadon(idPhieu, idSP) 
+                            VALUES ( $id, $value->idSP);";
             // var_dump($insert_bill);
             // exit;
             if (mysqli_query($conn, $insert_bill) === TRUE ) {
@@ -120,10 +128,8 @@
                                     <th>tên Khách Hàng</th>
                                     <th>SDT khách Hàng</th>
                                     <th>Địa Chỉ</th>
-                                    <th>Mã sản Phẩm</th>
-                                    <th>Tên sản Phẩm</th>
                                     <th>Số Lượng</th>
-                                    <th>Giá Sản Phẩm </th>
+                                    <th>Tổng Tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -132,9 +138,7 @@
                                         <td><?php echo $row["tenKH"]; ?></td>
                                         <td><?php echo $row["sdt"]; ?></td>
                                         <td><?php echo $row["diaChi"];?></td>
-                                        <td><?php echo $row["maSP"]; ?></td>
-                                        <td><?php echo $row["tenSP"]; ?></td>
-                                        <td><?php echo $row["soluong"];?></td>
+                                        <td><?php echo $row["tongSoLuong"];?></td>
                                         <td><?php echo $row["giaSP"];?></td>
                                         <td class="actions">
                                             <a href="/pages/index.php?page=order&type=check&id=<?=$row["idPhieu"]?>"><i class="mdi mdi-check"></i></a>
