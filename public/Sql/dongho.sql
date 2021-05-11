@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 09, 2021 lúc 05:51 PM
+-- Thời gian đã tạo: Th5 11, 2021 lúc 12:14 PM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.9
 
@@ -91,6 +91,7 @@ CREATE TABLE `dathang` (
   `tenKH` varchar(100) NOT NULL,
   `sdt` text NOT NULL,
   `diaChi` text NOT NULL,
+  `soLuong` int(11) NOT NULL,
   `tongCong` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -98,17 +99,16 @@ CREATE TABLE `dathang` (
 -- Đang đổ dữ liệu cho bảng `dathang`
 --
 
-INSERT INTO `dathang` (`idPhieu`, `tenKH`, `sdt`, `diaChi`, `tongCong`) VALUES
-(1, 'Lê Thái Dương ', '0905332211', 'Hà Nội', 12076000),
-(2, 'Nguyễn Thành Công ', '0905124568', 'Đà Nẵng', 61005000),
-(3, 'Phạm Thông Đạt ', '0905323536', 'Sài Gòn', 30225000),
-(4, 'Nguyên Thị Ngọc Hoa ', '0905212455', 'Huế', 12076000),
-(5, 'Trần Thiên Di', '0905656964', 'Đà Nẵng', 3848000),
-(6, 'Nguyễn Phạm Thiên Thanh', '0905121456', 'Hà Nội', 5542000),
-(7, 'Minh Đức', '0365051847', 'Huế', 9656000),
-(35, 'Lê Minh Đức', '0123456788', 'Huế', 53120000),
-(36, 'Minh Đức', '0123456788', 'Đà Nẵng', 158220000),
-(37, 'Lê Minh Đức', '0123456788', 'Huế', 231319000);
+INSERT INTO `dathang` (`idPhieu`, `tenKH`, `sdt`, `diaChi`, `soLuong`, `tongCong`) VALUES
+(1, 'Lê Thái Dương ', '0905332211', 'Hà Nội', 1, 12076000),
+(2, 'Nguyễn Thành Công ', '0905124568', 'Đà Nẵng', 1, 61005000),
+(3, 'Phạm Thông Đạt ', '0905323536', 'Sài Gòn', 1, 30225000),
+(4, 'Nguyên Thị Ngọc Hoa ', '0905212455', 'Huế', 1, 12076000),
+(5, 'Trần Thiên Di', '0905656964', 'Đà Nẵng', 1, 3848000),
+(6, 'Nguyễn Phạm Thiên Thanh', '0905121456', 'Hà Nội', 1, 5542000),
+(38, 'Lê Minh Đức', '0123456788', 'Huế', 15, 188400000),
+(39, 'Minh Đức', '0123456788', 'Đà Nẵng', 9, 108305000),
+(40, 'Đức', '0123456788', 'Đà Nẵng', 22, 285032000);
 
 -- --------------------------------------------------------
 
@@ -235,14 +235,12 @@ CREATE TABLE `thongtindathang` (
 --
 
 INSERT INTO `thongtindathang` (`id`, `idPhieu`, `idSP`, `soLuong`, `giaSP`) VALUES
-(7, 35, 2, 3, 12076000),
-(8, 35, 17, 2, 8446000),
-(9, 36, 4, 1, 16916000),
-(10, 36, 9, 2, 30225000),
-(11, 36, 15, 4, 9656000),
-(12, 36, 17, 5, 8446000),
-(13, 37, 2, 4, 12076000),
-(14, 37, 5, 3, 61005000);
+(17, 38, 4, 10, 16916000),
+(18, 38, 12, 5, 3848000),
+(19, 39, 3, 1, 65905000),
+(20, 39, 13, 8, 5300000),
+(21, 40, 4, 10, 16916000),
+(22, 40, 15, 12, 9656000);
 
 -- --------------------------------------------------------
 
@@ -338,7 +336,7 @@ ALTER TABLE `anhsanpham`
 -- AUTO_INCREMENT cho bảng `dathang`
 --
 ALTER TABLE `dathang`
-  MODIFY `idPhieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idPhieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT cho bảng `hoadon`
@@ -362,7 +360,7 @@ ALTER TABLE `sanpham`
 -- AUTO_INCREMENT cho bảng `thongtindathang`
 --
 ALTER TABLE `thongtindathang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT cho bảng `xuatkho`

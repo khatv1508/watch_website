@@ -50,8 +50,9 @@
                         while ($row = mysqli_fetch_array($result)){
                             $orderProduct[] = $row;
                             $total += $row['giaSP']*$_POST['soluong'][$row['idSP']];
+                            $quatity += $_POST['soluong'][$row['idSP']];
                         }
-                        $insertOrder = mysqli_query($conn,"INSERT INTO `dathang` (`idPhieu`, `tenKH`, `sdt`, `diaChi`, `tongCong`) VALUES (NULL, '".$_POST['name']."', '".$_POST['telephone']."', '".$_POST['address']."', '".$total."')");
+                        $insertOrder = mysqli_query($conn,"INSERT INTO `dathang` (`idPhieu`, `tenKH`, `sdt`, `diaChi`, `soLuong`, `tongCong`) VALUES (NULL, '".$_POST['name']."', '".$_POST['telephone']."', '".$_POST['address']."','".$quatity."', '".$total."')");
                         $idPhieu = $conn->insert_id;
                         $insertString =""; 
                         foreach ($orderProduct as $key => $result) {
@@ -122,6 +123,7 @@
                         <?php 
                             $num = 1;
                             $total = 0;
+                            $quatity = 0;
                             while ($row = mysqli_fetch_array($result)){?>
                                 
                                 <tr>
