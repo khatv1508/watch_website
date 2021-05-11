@@ -4,19 +4,19 @@
     $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
 
     $sql = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, sp.maSP, sp.tenSP, dh.tongSoLuong, 
-                    (dh.tongSoLuong * dh.tongTien) AS giaSP, dh.trangThai
+                    (dh.tongSoLuong * dh.tongTien) AS tongTien, dh.trangThai
             FROM dathang dh 
-            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
-            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)
+            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
             WHERE trangThai = 1
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
     $sql = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, sp.maSP, sp.tenSP, dh.tongSoLuong, 
-                    (dh.tongSoLuong * dh.tongTien) AS giaSP, dh.trangThai
+                    (dh.tongSoLuong * dh.tongTien) AS tongTien, dh.trangThai
             FROM dathang dh 
-            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
-            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)";
+            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)";
 
     $x = mysqli_query($conn, $sql);
     $total = mysqli_num_rows($x);
@@ -35,8 +35,8 @@
             $select_order = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, 
                                     (dh.soLuong * dh.tongTien) AS giaSP, dh.trangThai
                             FROM dathang dh 
-                            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
-                            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)
+                            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+                            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
                             WHERE dh.idPhieu = ".$id; 
             $result = mysqli_query($conn, $select_order); 
             $value = $result->fetch_object();
@@ -139,7 +139,7 @@
                                         <td><?php echo $row["sdt"]; ?></td>
                                         <td><?php echo $row["diaChi"];?></td>
                                         <td><?php echo $row["tongSoLuong"];?></td>
-                                        <td><?php echo $row["giaSP"];?></td>
+                                        <td><?php echo $row["tongTien"];?></td>
                                         <td class="actions">
                                             <a href="/pages/index.php?page=order&type=check&id=<?=$row["idPhieu"]?>"><i class="mdi mdi-check"></i></a>
                                         </td>

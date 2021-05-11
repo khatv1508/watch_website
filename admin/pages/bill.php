@@ -5,17 +5,17 @@
 
     $sql = "SELECT dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, (dh.tongSoLuong * dh.tongTien) AS giaSP
             FROM hoadon hd
-            INNER JOIN dathang dh ON (hd.idPhieu = dh.idPhieu)
-            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
-            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)
+            LEFT JOIN dathang dh ON (hd.idPhieu = dh.idPhieu)
+            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
     $sql = "SELECT dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, (dh.tongSoLuong * dh.tongTien) AS giaSP
             FROM hoadon hd
-            INNER JOIN dathang dh ON (hd.idPhieu = dh.idPhieu)
-            INNER JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
-            INNER JOIN sanpham sp ON (tt.idSP = sp.idSP)";
+            LEFT JOIN dathang dh ON (hd.idPhieu = dh.idPhieu)
+            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)";
 
     $x = mysqli_query($conn, $sql);
     $total = mysqli_num_rows($x);
