@@ -2,7 +2,6 @@
     session_start();
     ini_set('display_errors',0);
     require("../utils/connectDB.php");
-    $error = false;
     $success = false;
     if (!isset($_SESSION["cart"])) {
         $_SESSION["cart"] = array();
@@ -34,16 +33,30 @@
                         header('Location: cart.php');
                     }
                 elseif (isset($_POST["order"])) {
-                    if (empty($_POST["name"])) {
-                        $error = "Vui lòng nhập tên";
-                    }elseif (empty($_POST["telephone"])) {
-                        $error = "Vui lòng nhập số điện thoại";
-                    }elseif (empty($_POST["address"])) {
-                        $error = "Vui lòng nhập địa chỉ";
-                    }elseif (empty($_POST["soluong"])){
-                        $error = "Giỏ hàng rỗng";
-                    }
-                    if ($error == false && !empty($_POST["soluong"])){
+                    if (empty($_POST["name"])) { ?>
+                        <script language="javascript">
+                            alert("Vui lòng nhập tên");
+                            history.back();
+                       </script>
+
+                    <?php }elseif (empty($_POST["telephone"])) { ?>
+                        <script language="javascript">
+                            alert("Vui lòng nhập số điện thoại");
+                            history.back();
+                       </script>
+                    <?php }elseif (empty($_POST["address"])) { ?>
+                        <script language="javascript">
+                            alert("Vui lòng nhập địa chỉ");
+                            history.back();
+                       </script>
+
+                    <?php }elseif (empty($_POST["soluong"])){ ?>
+                        <script language="javascript">
+                            alert("Giỏ hàng rỗng");
+                            history.back();
+                       </script>
+
+                    <?php }elseif(!empty($_POST["soluong"])){
                         $result=mysqli_query($conn,"SELECT * from sanpham WHERE idSP in (".implode(",", array_keys($_POST["soluong"])).")");
                         $total = 0;
                         $orderProduct = array();
@@ -97,11 +110,7 @@
         </div><br>
         <div style="border: 3px solid;" class="container">
             <?php 
-                if (!empty($error)) {?>
-                    <div>
-                       <h3> <?=$error;?>.<a style="color: red;" href="javascript: history.back()">Quay lại</a></h3>
-                    </div>
-                <?php }elseif (!empty($success)) {?>
+                if (!empty($success)) {?>
                     <div>
                        <h3> <?=$success;?>.<a style="color: red;" href="index.php">Trang chủ</a></h3>
                     </div>
