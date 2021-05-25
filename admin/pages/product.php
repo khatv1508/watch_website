@@ -159,6 +159,31 @@
                 </div>';
             }
             break;
+
+        // case 'image':
+        //     $urlImage = '';
+        //     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        //         if(isset($_POST["masp"])) { $maSP = $_POST['masp']; }
+        //         if(isset($_POST["hangsp"])) { $hang = $_POST['hangsp']; }
+        //     $insert_image = "INSERT INTO anhsanpham(idSP, urlImage) VALUES ($id, $urlImage);";
+        //     if (mysqli_query($conn, $insert_image) === TRUE ) {
+        //         echo 
+        //         '<div class="alert alert-success alert-dismissible fade show" role="alert">
+        //             <strong>Xóa sản phẩm thành công</strong>
+        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //             <span aria-hidden="true">&times;</span>
+        //             </button>
+        //         </div>';
+        //     } else {
+        //         echo 
+        //         '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        //             <strong>Đã xảy ra lỗi !!!</strong>
+        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //             <span aria-hidden="true">&times;</span>
+        //             </button>
+        //         </div>';
+        //     }
+        //     break;    
         
         default: 
             break;           
