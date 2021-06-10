@@ -1,35 +1,14 @@
 <?php  
 	require("../utils/connectDB.php");
-    $sql = "SELECT * from sanpham WHERE Loai=N'Đồng hồ nam'";
-    $result=mysqli_query($conn,$sql);
+    $result=mysqli_query($conn,"SELECT * FROM sanpham sp LEFT JOIN anhsanpham asp ON (sp.idSP = asp.idSP) WHERE sp.loai =N'Đồng hồ nam'");
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Watch Shop | Men's Watch</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
-
-    <!-- CSS here -->
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="../assets/css/flaticon.css">
-        <link rel="stylesheet" href="../assets/css/slicknav.css">
-        <link rel="stylesheet" href="../assets/css/animate.min.css">
-        <link rel="stylesheet" href="../assets/css/magnific-popup.css">
-        <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="../assets/css/themify-icons.css">
-        <link rel="stylesheet" href="../assets/css/slick.css">
-        <link rel="stylesheet" href="../assets/css/nice-select.css">
-        <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-
+<?php include("../pages/header.html"); ?>
 <body>
-    <?php include("../pages/header.html"); ?>
     <main>
         <!-- Hero Area Start-->
         <div class="slider-area ">
@@ -86,7 +65,7 @@
                                     <div style="float:left;width:33.33%; height:700px; "class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="single-popular-items mb-50 text-center"> 
                                                 <a href="product_detail.php?id='.$row["idSP"].'">  
-                                                    <div style="width:300px;height:380px" class="popular-img">'.$row["img"].
+                                                    <div style="width:300px;height:380px" class="popular-img">'.$row["urlImage"].
                                                 '<</div>/a>
                                                     
                                                     <div class="popular-caption">

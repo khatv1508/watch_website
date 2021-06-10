@@ -2,7 +2,6 @@
     session_start();
     ini_set('display_errors',0);
     require("../utils/connectDB.php");
-    $error = false;
     $success = false;
     if (!isset($_SESSION["cart"])) {
         $_SESSION["cart"] = array();
@@ -34,24 +33,39 @@
                         header('Location: cart.php');
                     }
                 elseif (isset($_POST["order"])) {
-                    if (empty($_POST["name"])) {
-                        $error = "Vui lòng nhập tên";
-                    }elseif (empty($_POST["telephone"])) {
-                        $error = "Vui lòng nhập số điện thoại";
-                    }elseif (empty($_POST["address"])) {
-                        $error = "Vui lòng nhập địa chỉ";
-                    }elseif (empty($_POST["soluong"])){
-                        $error = "Giỏ hàng rỗng";
-                    }
-                    if ($error == false && !empty($_POST["soluong"])){
+                    if (empty($_POST["name"])) { ?>
+                        <script language="javascript">
+                            alert("Vui lòng nhập tên");
+                            history.back();
+                       </script>
+
+                    <?php }elseif (empty($_POST["telephone"])) { ?>
+                        <script language="javascript">
+                            alert("Vui lòng nhập số điện thoại");
+                            history.back();
+                       </script>
+                    <?php }elseif (empty($_POST["address"])) { ?>
+                        <script language="javascript">
+                            alert("Vui lòng nhập địa chỉ");
+                            history.back();
+                       </script>
+
+                    <?php }elseif (empty($_POST["soluong"])){ ?>
+                        <script language="javascript">
+                            alert("Giỏ hàng rỗng");
+                            history.back();
+                       </script>
+
+                    <?php }elseif(!empty($_POST["soluong"])){
                         $result=mysqli_query($conn,"SELECT * from sanpham WHERE idSP in (".implode(",", array_keys($_POST["soluong"])).")");
                         $total = 0;
                         $orderProduct = array();
                         while ($row = mysqli_fetch_array($result)){
                             $orderProduct[] = $row;
                             $total += $row['giaSP']*$_POST['soluong'][$row['idSP']];
+                            $quatity += $_POST['soluong'][$row['idSP']];
                         }
-                        $insertOrder = mysqli_query($conn,"INSERT INTO `dathang` (`idPhieu`, `tenKH`, `sdt`, `diaChi`, `tongCong`) VALUES (NULL, '".$_POST['name']."', '".$_POST['telephone']."', '".$_POST['address']."', '".$total."')");
+                        $insertOrder = mysqli_query($conn,"INSERT INTO `dathang` (`idPhieu`, `tenKH`, `sdt`, `diaChi`, `soLuong`, `tongCong`) VALUES (NULL, '".$_POST['name']."', '".$_POST['telephone']."', '".$_POST['address']."','".$quatity."', '".$total."')");
                         $idPhieu = $conn->insert_id;
                         $insertString =""; 
                         foreach ($orderProduct as $key => $result) {
@@ -69,37 +83,17 @@
         }
     }
     if (!empty( $_SESSION["cart"])) {
-        $sql = "SELECT * from sanpham WHERE idSP in (".implode(",", array_keys($_SESSION["cart"])).")";
+        $sql = "SELECT * from sanpham sp LEFT JOIN anhsanpham asp ON (sp.idSP = asp.idSP) WHERE sp.idSP in (".implode(",", array_keys($_SESSION["cart"])).")";
         $result=mysqli_query($conn,$sql);
     }
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Watch Shop | Men's Watch</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
-
-    <!-- CSS here -->
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="../assets/css/flaticon.css">
-        <link rel="stylesheet" href="../assets/css/slicknav.css">
-        <link rel="stylesheet" href="../assets/css/animate.min.css">
-        <link rel="stylesheet" href="../assets/css/magnific-popup.css">
-        <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="../assets/css/themify-icons.css">
-        <link rel="stylesheet" href="../assets/css/slick.css">
-        <link rel="stylesheet" href="../assets/css/nice-select.css">
-        <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-
+<?php include("../pages/header.html"); ?>
 <body>
-    <?php include("../pages/header.html"); ?>
     <main>
         <div class="slider-area ">
             <div class="single-slider slider-height2 d-flex align-items-center">
@@ -116,11 +110,7 @@
         </div><br>
         <div style="border: 3px solid;" class="container">
             <?php 
-                if (!empty($error)) {?>
-                    <div>
-                       <h3> <?=$error;?>.<a style="color: red;" href="javascript: history.back()">Quay lại</a></h3>
-                    </div>
-                <?php }elseif (!empty($success)) {?>
+                if (!empty($success)) {?>
                     <div>
                        <h3> <?=$success;?>.<a style="color: red;" href="index.php">Trang chủ</a></h3>
                     </div>
@@ -142,12 +132,13 @@
                         <?php 
                             $num = 1;
                             $total = 0;
+                            $quatity = 0;
                             while ($row = mysqli_fetch_array($result)){?>
                                 
                                 <tr>
                                     <td><?= $num;?></td>
                                     <td><?= $row['tenSP']?></td>
-                                    <td><?=$row['img'];?></td>
+                                    <td><?=$row['urlImage'];?></td>
                                     <td><?= number_format($row['giaSP'], 0,",",".")?> VND</td>
                                     <td><input style="text-align: center;" size="2" type="text" value="<?=$_SESSION["cart"] [$row['idSP']]?>" name="soluong[<?= $row['idSP']?>]"></td>
                                     <td><?= number_format($row['giaSP']*$_SESSION["cart"] [$row['idSP']], 0,",",".")?> VND</td>

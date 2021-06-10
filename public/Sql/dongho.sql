@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 06, 2021 lúc 03:39 AM
+-- Thời gian đã tạo: Th5 11, 2021 lúc 12:14 PM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.9
 
@@ -45,6 +45,44 @@ INSERT INTO `account` (`id`, `username`, `password`, `gmail`, `day_add`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `anhsanpham`
+--
+
+CREATE TABLE `anhsanpham` (
+  `idImage` int(11) NOT NULL,
+  `idSP` int(11) NOT NULL,
+  `urlImage` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `anhsanpham`
+--
+
+INSERT INTO `anhsanpham` (`idImage`, `idSP`, `urlImage`) VALUES
+(1, 1, '<img src=\"../assets/img/gallery/1.jpg\" alt=\"\">'),
+(2, 2, '<img src=\"../assets/img/gallery/2.jpg\" alt=\"\">'),
+(3, 3, '<img src=\"../assets/img/gallery/3.jpg\" alt=\"\">'),
+(4, 4, '<img src=\"../assets/img/gallery/4.jpg\" alt=\"\">'),
+(5, 5, '<img src=\"../assets/img/gallery/5.jpg\" alt=\"\">'),
+(6, 6, '<img src=\"../assets/img/gallery/6.jpg\" alt=\"\">'),
+(7, 7, '<img src=\"../assets/img/gallery/7.jpg\" alt=\"\">'),
+(8, 8, '<img src=\"../assets/img/gallery/8.jpg\" alt=\"\">'),
+(9, 9, '<img src=\"../assets/img/gallery/9.jpg\" alt=\"\">'),
+(10, 10, '<img src=\"../assets/img/gallery/10.jpg\" alt=\"\">'),
+(11, 11, '<img src=\"../assets/img/gallery/11.jpg\" alt=\"\">'),
+(12, 12, '<img src=\"../assets/img/gallery/12.jpg\" alt=\"\">'),
+(13, 13, '<img src=\"../assets/img/gallery/13.jpg\" alt=\"\">'),
+(14, 14, '<img src=\"../assets/img/gallery/14.jpg\" alt=\"\">'),
+(15, 15, '<img src=\"../assets/img/gallery/15.jpg\" alt=\"\">'),
+(16, 16, '<img src=\"../assets/img/gallery/16.jpg\" alt=\"\">'),
+(17, 17, '<img src=\"../assets/img/gallery/17.jpg\" alt=\"\">'),
+(18, 18, '<img src=\"../assets/img/gallery/18.jpg\" alt=\"\">'),
+(19, 19, '<img src=\"../assets/img/gallery/19.jpg\" alt=\"\">'),
+(20, 20, '<img src=\"../assets/img/gallery/20.jpg\" alt=\"\">');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `dathang`
 --
 
@@ -53,6 +91,7 @@ CREATE TABLE `dathang` (
   `tenKH` varchar(100) NOT NULL,
   `sdt` text NOT NULL,
   `diaChi` text NOT NULL,
+  `soLuong` int(11) NOT NULL,
   `tongCong` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -60,16 +99,16 @@ CREATE TABLE `dathang` (
 -- Đang đổ dữ liệu cho bảng `dathang`
 --
 
-INSERT INTO `dathang` (`idPhieu`, `tenKH`, `sdt`, `diaChi`, `tongCong`) VALUES
-(1, 'Lê Thái Dương ', '0905332211', 'Hà Nội', 12076000),
-(2, 'Nguyễn Thành Công ', '0905124568', 'Đà Nẵng', 61005000),
-(3, 'Phạm Thông Đạt ', '0905323536', 'Sài Gòn', 30225000),
-(4, 'Nguyên Thị Ngọc Hoa ', '0905212455', 'Huế', 12076000),
-(5, 'Trần Thiên Di', '0905656964', 'Đà Nẵng', 3848000),
-(6, 'Nguyễn Phạm Thiên Thanh', '0905121456', 'Hà Nội', 5542000),
-(7, 'Minh Đức', '0365051847', 'Huế', 9656000),
-(35, 'Lê Minh Đức', '0123456788', 'Huế', 53120000),
-(36, 'Minh Đức', '0123456788', 'Đà Nẵng', 158220000);
+INSERT INTO `dathang` (`idPhieu`, `tenKH`, `sdt`, `diaChi`, `soLuong`, `tongCong`) VALUES
+(1, 'Lê Thái Dương ', '0905332211', 'Hà Nội', 1, 12076000),
+(2, 'Nguyễn Thành Công ', '0905124568', 'Đà Nẵng', 1, 61005000),
+(3, 'Phạm Thông Đạt ', '0905323536', 'Sài Gòn', 1, 30225000),
+(4, 'Nguyên Thị Ngọc Hoa ', '0905212455', 'Huế', 1, 12076000),
+(5, 'Trần Thiên Di', '0905656964', 'Đà Nẵng', 1, 3848000),
+(6, 'Nguyễn Phạm Thiên Thanh', '0905121456', 'Hà Nội', 1, 5542000),
+(38, 'Lê Minh Đức', '0123456788', 'Huế', 15, 188400000),
+(39, 'Minh Đức', '0123456788', 'Đà Nẵng', 9, 108305000),
+(40, 'Đức', '0123456788', 'Đà Nẵng', 22, 285032000);
 
 -- --------------------------------------------------------
 
@@ -148,35 +187,34 @@ CREATE TABLE `sanpham` (
   `chatLieuDay` varchar(100) NOT NULL,
   `chatLieuKinh` varchar(100) NOT NULL,
   `doChiuNuoc` varchar(100) NOT NULL,
-  `giaSP` int(100) NOT NULL,
-  `img` text NOT NULL
+  `giaSP` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `sanpham`
 --
 
-INSERT INTO `sanpham` (`idSP`, `maSP`, `hangSP`, `tenSP`, `xuatXu`, `kieuMay`, `loai`, `duongKinh`, `chatLieuVo`, `chatLieuDay`, `chatLieuKinh`, `doChiuNuoc`, `giaSP`, `img`) VALUES
-(1, 'H9030PM', 'Mathey Tissot', 'Mathey Tissot RETRO RENAISSANCE AUTOMATIC', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '43mm', 'Thép không gỉ 316L/Mạ PVD', 'Dây Da Thật', 'Kính Sapphire', '50M', 19396000, '<img src=\"../assets/img/gallery/1.jpg\" alt=\"\">'),
-(2, 'HB611251ATAN', 'Mathey Tissot', 'Mathey Tissot CITY AUTOMATIC', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire coated', '50M', 12076000, '<img src=\"../assets/img/gallery/2.jpg\" alt=\"\">'),
-(3, 'H900ATLV', 'Mathey Tissot', 'Mathey Tissot ROLLY VINTAGE AUTOMATIC', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '43mm', 'Thép không gỉ 316L/Mạ Carbon', 'Dây Da Thật', 'Kính Sapphire', '100M', 65905000, '<img src=\"../assets/img/gallery/3.jpg\" alt=\"\">'),
-(4, 'S3O', 'Mathey Tissot', 'Mathey Tissot STORM', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '40mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire coated', '100M', 16916000, '<img src=\"../assets/img/gallery/4.jpg\" alt=\"\">'),
-(5, 'EG1886ATV', 'Mathey Tissot', 'Mathey Tissot ERIC GIROUD AUTOMATIC', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire Antireflex', '50M', 61005000, '<img src=\"../assets/img/gallery/5.jpg\" alt=\"\">'),
-(6, 'H7030AM', 'Mathey Tissot', 'Mathey Tissot Retrograde Chrono', 'Thụy Sĩ', ' Quartz', 'Đồng hồ nam', '43mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire', '50M', 14496000, '<img src=\"../assets/img/gallery/6.jpg\" alt=\"\">'),
-(7, 'H7030RSO', 'Mathey Tissot', 'Mathey Tissot Retrograde Chrono', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nam', '43mm', 'Thép không gỉ 316L/Mạ Carbon', 'Dây Da Thật', 'Kính Sapphire', '50M', 14496000, '<img src=\"../assets/img/gallery/7.jpg\" alt=\"\">'),
-(8, 'AMH1886AS', 'Mathey Tissot', 'Mathey Tissot Edmond Automatic', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire Antireflex', '50M', 31218000, '<img src=\"../assets/img/gallery/8.jpg\" alt=\"\">'),
-(9, 'MC1886AV', 'Mathey Tissot', 'Mathey Tissot Edmond Automatic', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L', 'Dây Da Bò', 'Kính Sapphire', '50M', 30225000, '<img src=\"../assets/img/gallery/9.jpg\" alt=\"\">'),
-(10, 'H1886PS', 'Mathey Tissot', 'Mathey Tissot Edmond Automatic', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L/Mạ PVD', 'Dây Da Thật', 'Kính Sapphire', '50M', 21756000, '<img src=\"../assets/img/gallery/10.jpg\" alt=\"\">'),
-(11, 'D410ALI', 'Mathey Tissot', 'Mathey Tissot Elegance', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L', 'Dây Da ', 'Kính Sapphire', '50M', 5340000, '<img src=\"../assets/img/gallery/11.jpg\" alt=\"\">'),
-(12, 'D31186ABU', 'Mathey Tissot', 'Mathey Tissot City', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '28mm', 'Thép không gỉ 316L', 'Dây Da ', 'Kính Sapphire coated', '50M', 3848000, '<img src=\"../assets/img/gallery/12.jpg\" alt=\"\">'),
-(13, 'D865PI', 'Mathey Tissot', 'Mathey Tissot SPLASH', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '38mm', 'Thép không gỉ 316L', 'Dây Da ', 'Kính Sapphire', '50M', 5300000, '<img src=\"../assets/img/gallery/13.jpg\" alt=\"\">'),
-(14, 'D411ABU', 'Mathey Tissot', 'Mathey Tissot Urban', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '30mm', 'Thép không gỉ 316L', 'Dây Da ', 'Kính Sapphire coated', '50M', 4090000, '<img src=\"../assets/img/gallery/14.jpg\" alt=\"\">'),
-(15, 'D1086PQI', 'Mathey Tissot', 'Mathey Tissot ARTEMIS', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L/Mạ PVD', 'Thép không gỉ 316L/Mạ PVD', 'Kính Sapphire', '30M', 9656000, '<img src=\"../assets/img/gallery/15.jpg\" alt=\"\">'),
-(16, 'D2111AN', 'Mathey Tissot', 'Mathey Tissot Elisa', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '30mm', 'Thép không gỉ 316L', 'Thép không gỉ 316L', 'Kính Sapphire coated', '50M', 5542000, '<img src=\"../assets/img/gallery/16.jpg\" alt=\"\">'),
-(17, 'D3082RN', 'Mathey Tissot', 'Mathey Tissot Lucrezia', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L/Mạ PVD', 'Thép không gỉ 316L/Mạ PVD', 'Kính Sapphire', '50M', 8446000, '<img src=\"../assets/img/gallery/17.jpg\" alt=\"\">'),
-(18, 'D410AQN', 'Mathey Tissot', 'Mathey Tissot Elegance', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L', 'Thép không gỉ 316L', 'Kính Sapphire', '50M', 9656000, '<img src=\"../assets/img/gallery/18.jpg\" alt=\"\">'),
-(19, 'D810AV', 'Mathey Tissot', 'Mathey Tissot Rolly III', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '26mm', 'Thép không gỉ 316L', 'Thép không gỉ 316L', 'Kính Cứng', '50M', 4322000, '<img src=\"../assets/img/gallery/19.jpg\" alt=\"\">'),
-(20, 'D593SANI', 'Mathey Tissot', 'Mathey Tissot ATHENA', 'Thụy Sĩ', 'Quartz)', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L', 'Thép không gỉ 316L', 'Kính Sapphire', '50M', 12076000, '<img src=\"../assets/img/gallery/20.jpg\" alt=\"\">');
+INSERT INTO `sanpham` (`idSP`, `maSP`, `hangSP`, `tenSP`, `xuatXu`, `kieuMay`, `loai`, `duongKinh`, `chatLieuVo`, `chatLieuDay`, `chatLieuKinh`, `doChiuNuoc`, `giaSP`) VALUES
+(1, 'H9030PM', 'Mathey Tissot', 'Mathey Tissot RETRO RENAISSANCE AUTOMATIC', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '43mm', 'Thép không gỉ 316L/Mạ PVD', 'Dây Da Thật', 'Kính Sapphire', '50M', 19396000),
+(2, 'HB611251ATAN', 'Mathey Tissot', 'Mathey Tissot CITY AUTOMATIC', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire coated', '50M', 12076000),
+(3, 'H900ATLV', 'Mathey Tissot', 'Mathey Tissot ROLLY VINTAGE AUTOMATIC', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '43mm', 'Thép không gỉ 316L/Mạ Carbon', 'Dây Da Thật', 'Kính Sapphire', '100M', 65905000),
+(4, 'S3O', 'Mathey Tissot', 'Mathey Tissot STORM', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '40mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire coated', '100M', 16916000),
+(5, 'EG1886ATV', 'Mathey Tissot', 'Mathey Tissot ERIC GIROUD AUTOMATIC', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire Antireflex', '50M', 61005000),
+(6, 'H7030AM', 'Mathey Tissot', 'Mathey Tissot Retrograde Chrono', 'Thụy Sĩ', ' Quartz', 'Đồng hồ nam', '43mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire', '50M', 14496000),
+(7, 'H7030RSO', 'Mathey Tissot', 'Mathey Tissot Retrograde Chrono', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nam', '43mm', 'Thép không gỉ 316L/Mạ Carbon', 'Dây Da Thật', 'Kính Sapphire', '50M', 14496000),
+(8, 'AMH1886AS', 'Mathey Tissot', 'Mathey Tissot Edmond Automatic', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L', 'Dây Da Thật', 'Kính Sapphire Antireflex', '50M', 31218000),
+(9, 'MC1886AV', 'Mathey Tissot', 'Mathey Tissot Edmond Automatic', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L', 'Dây Da Bò', 'Kính Sapphire', '50M', 30225000),
+(10, 'H1886PS', 'Mathey Tissot', 'Mathey Tissot Edmond Automatic', 'Thụy Sĩ', 'Automatic', 'Đồng hồ nam', '42mm', 'Thép không gỉ 316L/Mạ PVD', 'Dây Da Thật', 'Kính Sapphire', '50M', 21756000),
+(11, 'D410ALI', 'Mathey Tissot', 'Mathey Tissot Elegance', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L', 'Dây Da ', 'Kính Sapphire', '50M', 5340000),
+(12, 'D31186ABU', 'Mathey Tissot', 'Mathey Tissot City', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '28mm', 'Thép không gỉ 316L', 'Dây Da ', 'Kính Sapphire coated', '50M', 3848000),
+(13, 'D865PI', 'Mathey Tissot', 'Mathey Tissot SPLASH', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '38mm', 'Thép không gỉ 316L', 'Dây Da ', 'Kính Sapphire', '50M', 5300000),
+(14, 'D411ABU', 'Mathey Tissot', 'Mathey Tissot Urban', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '30mm', 'Thép không gỉ 316L', 'Dây Da ', 'Kính Sapphire coated', '50M', 4090000),
+(15, 'D1086PQI', 'Mathey Tissot', 'Mathey Tissot ARTEMIS', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L/Mạ PVD', 'Thép không gỉ 316L/Mạ PVD', 'Kính Sapphire', '30M', 9656000),
+(16, 'D2111AN', 'Mathey Tissot', 'Mathey Tissot Elisa', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '30mm', 'Thép không gỉ 316L', 'Thép không gỉ 316L', 'Kính Sapphire coated', '50M', 5542000),
+(17, 'D3082RN', 'Mathey Tissot', 'Mathey Tissot Lucrezia', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L/Mạ PVD', 'Thép không gỉ 316L/Mạ PVD', 'Kính Sapphire', '50M', 8446000),
+(18, 'D410AQN', 'Mathey Tissot', 'Mathey Tissot Elegance', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L', 'Thép không gỉ 316L', 'Kính Sapphire', '50M', 9656000),
+(19, 'D810AV', 'Mathey Tissot', 'Mathey Tissot Rolly III', 'Thụy Sĩ', 'Quartz', 'Đồng hồ nữ', '26mm', 'Thép không gỉ 316L', 'Thép không gỉ 316L', 'Kính Cứng', '50M', 4322000),
+(20, 'D593SANI', 'Mathey Tissot', 'Mathey Tissot ATHENA', 'Thụy Sĩ', 'Quartz)', 'Đồng hồ nữ', '32mm', 'Thép không gỉ 316L', 'Thép không gỉ 316L', 'Kính Sapphire', '50M', 12076000);
 
 -- --------------------------------------------------------
 
@@ -197,12 +235,12 @@ CREATE TABLE `thongtindathang` (
 --
 
 INSERT INTO `thongtindathang` (`id`, `idPhieu`, `idSP`, `soLuong`, `giaSP`) VALUES
-(7, 35, 2, 3, 12076000),
-(8, 35, 17, 2, 8446000),
-(9, 36, 4, 1, 16916000),
-(10, 36, 9, 2, 30225000),
-(11, 36, 15, 4, 9656000),
-(12, 36, 17, 5, 8446000);
+(17, 38, 4, 10, 16916000),
+(18, 38, 12, 5, 3848000),
+(19, 39, 3, 1, 65905000),
+(20, 39, 13, 8, 5300000),
+(21, 40, 4, 10, 16916000),
+(22, 40, 15, 12, 9656000);
 
 -- --------------------------------------------------------
 
@@ -228,6 +266,13 @@ CREATE TABLE `xuatkho` (
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `anhsanpham`
+--
+ALTER TABLE `anhsanpham`
+  ADD PRIMARY KEY (`idImage`),
+  ADD KEY `idSP` (`idSP`);
 
 --
 -- Chỉ mục cho bảng `dathang`
@@ -282,10 +327,16 @@ ALTER TABLE `account`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT cho bảng `anhsanpham`
+--
+ALTER TABLE `anhsanpham`
+  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT cho bảng `dathang`
 --
 ALTER TABLE `dathang`
-  MODIFY `idPhieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idPhieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT cho bảng `hoadon`
@@ -309,7 +360,7 @@ ALTER TABLE `sanpham`
 -- AUTO_INCREMENT cho bảng `thongtindathang`
 --
 ALTER TABLE `thongtindathang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT cho bảng `xuatkho`
@@ -320,6 +371,12 @@ ALTER TABLE `xuatkho`
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
+
+--
+-- Các ràng buộc cho bảng `anhsanpham`
+--
+ALTER TABLE `anhsanpham`
+  ADD CONSTRAINT `anhsanpham_ibfk_1` FOREIGN KEY (`idSP`) REFERENCES `sanpham` (`idSP`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `hoadon`

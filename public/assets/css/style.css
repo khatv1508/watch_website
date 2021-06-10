@@ -1970,9 +1970,9 @@ input:focus::-moz-placeholder {
     right: 0;
     bottom: 0;
     z-index: 999999;
-    -webkit-transition: .6s;
-    -o-transition: .6s;
-    transition: .6s;
+    -webkit-transition: .3s;
+    -o-transition: .3s;
+    transition: .3s;
     margin: 0 auto
 }
 
