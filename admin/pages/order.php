@@ -4,19 +4,21 @@
     $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
 
     $sql = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, sp.maSP, sp.tenSP, dh.tongSoLuong, 
-                    (dh.tongSoLuong * dh.tongTien) AS tongTien, dh.trangThai
+                    dh.tongTien, dh.trangThai
             FROM dathang dh 
             LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
             LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
             WHERE trangThai = 1
+            GROUP BY dh.tenKH
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
     $sql = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, sp.maSP, sp.tenSP, dh.tongSoLuong, 
-                    (dh.tongSoLuong * dh.tongTien) AS tongTien, dh.trangThai
+                    dh.tongTien, dh.trangThai
             FROM dathang dh 
             LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
-            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)";
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
+            GROUP BY dh.tenKH";
 
     $x = mysqli_query($conn, $sql);
     $total = mysqli_num_rows($x);
@@ -31,20 +33,21 @@
     switch($type){
         case 'check';
             $idSP = ''; 
-            // get thong don hang
+            // get don hang
             $select_order = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, 
-                                    (dh.soLuong * dh.tongTien) AS giaSP, dh.trangThai
+                                    dh.tongTien, dh.trangThai
                             FROM dathang dh 
                             LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
                             LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
-                            WHERE dh.idPhieu = ".$id; 
+                            WHERE dh.idPhieu = ".$id;
             $result = mysqli_query($conn, $select_order); 
             $value = $result->fetch_object();
 
-            $insert_bill = "INSERT INTO hoadon(idPhieu, idSP) 
-                            VALUES ( $id, $value->idSP);";
-            // var_dump($insert_bill);
-            // exit;
+            
+
+            $insert_bill = "INSERT INTO hoadon(idPhieu) 
+                            VALUES ($id);";
+            
             if (mysqli_query($conn, $insert_bill) === TRUE ) {
                 // update trang thai
                 $update_product = "UPDATE dathang 
@@ -52,21 +55,32 @@
                                     WHERE idPhieu = ".$id;
 
                 if (mysqli_query($conn, $update_product) === TRUE){
-                    echo 
-                    '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Thành công</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
-                } else {
-                    echo 
-                    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Đã xảy ra lỗi !!!</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
+
+                    $select_infomation = "SELECT * FROM thongtindathang WHERE idPhieu = ".$id;
+                    $result1 = mysqli_query($conn, $select_infomation);
+
+                    try{
+                        while ($row = mysqli_fetch_array($result1)){
+                            $update_warehouse = "UPDATE nhapkho
+                                                    SET soLuong = soLuong - ".$row["soLuong"]."
+                                                    WHERE idSP = ".$row["idSP"];
+                            mysqli_query($conn, $update_warehouse);
+                        } 
+                        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Thành công</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>';   
+                    }
+                    catch(Exception $e) {
+                        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Đã xảy ra lỗi !!!</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>';
+                    }
                 }
             }
             break;

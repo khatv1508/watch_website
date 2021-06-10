@@ -249,27 +249,6 @@
                                                         </div>
                                                     </div>
                                                 <?php } ?>
-                                                <!-- <div class="form-group row showcase_row_area">
-                                                    <div class="col-md-6 showcase_content_area">
-                                                        <div class="tm-product-img-dummy">
-                                                            <i class="fas fa-cloud-upload-alt tm-upload-icon" onclick="document.getElementById('fileInput').click();"></i>
-                                                        </div>
-                                                        <div class="custom-file mt-3 mb-6">
-                                                            <input id="fileInput" type="file" style="display:none;">
-                                                            <input type="button" class="btn btn-primary btn-block" value="UPLOAD PRODUCT IMAGE" onclick="document.getElementById('fileInput').click();">
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-
-                                                <!-- <div class="form-group row showcase_row_area">
-                                                    <div class="col-md-1 showcase_text_area">
-                                                        <label>Hình Ảnh</label>
-                                                    </div>
-                                                    <div class="col-md-5 showcase_content_area">
-                                                        <input type="file" name="file">
-                                                    </div>
-                                                </div> -->
-                                                
                                                 <div class="form-group row showcase_row_area">
                                                     <div class="col-md-1 showcase_text_area">
                                                         <button type="submit" class="btn btn-primary btn-block">Thêm</button>

@@ -160,30 +160,18 @@
             }
             break;
 
-        // case 'image':
-        //     $urlImage = '';
-        //     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        //         if(isset($_POST["masp"])) { $maSP = $_POST['masp']; }
-        //         if(isset($_POST["hangsp"])) { $hang = $_POST['hangsp']; }
-        //     $insert_image = "INSERT INTO anhsanpham(idSP, urlImage) VALUES ($id, $urlImage);";
-        //     if (mysqli_query($conn, $insert_image) === TRUE ) {
-        //         echo 
-        //         '<div class="alert alert-success alert-dismissible fade show" role="alert">
-        //             <strong>Xóa sản phẩm thành công</strong>
-        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        //             <span aria-hidden="true">&times;</span>
-        //             </button>
-        //         </div>';
-        //     } else {
-        //         echo 
-        //         '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        //             <strong>Đã xảy ra lỗi !!!</strong>
-        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        //             <span aria-hidden="true">&times;</span>
-        //             </button>
-        //         </div>';
-        //     }
-        //     break;    
+        case 'image':
+            // $insert_image = "INSERT INTO anhsanpham(idSP, urlImage) VALUES ($id, $urlImage);";
+            // if (mysqli_query($conn, $insert_image) === TRUE ) {
+            //     echo 
+            //     '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            //         <strong>Upload ảnh thành công</strong>
+            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //         <span aria-hidden="true">&times;</span>
+            //         </button>
+            //     </div>';
+            // }
+            break;    
         
         default: 
             break;           
@@ -243,6 +231,9 @@
                                         <td><?php echo $row["giaSP"];?></td>
                                         <td class="actions">
                                             <a href="/pages/edit.php?id=<?=$row["idSP"];?>&type=edit"><i class="mdi mdi-pencil"></i></a>
+                                        </td>
+                                        <td class="actions">
+                                            <a href="/pagesindex.php?page=image&id=<?=$row["idSP"];?>&type=image"><i class="mdi mdi-file-image"></i></a>
                                         </td>
                                         <td class="actions">
                                             <a href="/pages/index.php?page=product&id=<?=$row["idSP"];?>&type=delete"><i class="mdi mdi-window-close"></i></a>
