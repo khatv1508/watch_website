@@ -28,28 +28,11 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>ADMIN</title>
-        <!-- plugins:css -->
-        <link rel="stylesheet" href="/assets/vendors/iconfonts/mdi/css/materialdesignicons.css">
-        <!-- endinject -->
-        <!-- vendor css for this page -->
-        <!-- End vendor css for this page -->
-        <!-- inject:css -->
-        <link rel="stylesheet" href="/assets/css/shared/style.css">
-        <!-- endinject -->
-        <!-- Layout style -->
-        <link rel="stylesheet" href="/assets/css/demo_1/style.css">
-        <link rel="stylesheet" href="/assets/css/demo_1/mycss.css">
-        <!-- Layout style -->
-        <link rel="shortcut icon" href="/assets/images/favicon.ico" />
-    </head>
+    <?php
+        include("../pages/header.php");
+    ?>
     <body class="header-fixed">
-        <?php
-            include("../pages/header.php");
-        ?>
+       
         <!-- partial -->
         <div class="page-body">
             <!-- partial:partials/_sidebar.html -->
@@ -268,19 +251,8 @@
             </div>
         <!-- page content ends -->
         </div>
-        <!--page body ends -->
-        <!-- SCRIPT LOADING START FORM HERE /////////////-->
-        <!-- plugins:js -->
-        <script src="/assets/vendors/js/core.js"></script>
-        <!-- endinject -->
-        <!-- Vendor Js For This Page Ends-->
-        <script src="/assets/vendors/apexcharts/apexcharts.min.js"></script>
-        <script src="/assets/vendors/chartjs/Chart.min.js"></script>
-        <script src="/assets/js/charts/chartjs.addon.js"></script>
-        <!-- Vendor Js For This Page Ends-->
-        <!-- build:js -->
-        <script src="/assets/js/template.js"></script>
-        <script src="/assets/js/dashboard.js"></script>
-        <!-- endbuild -->
+        <?php
+            include("../pages/footer.php");
+        ?>
     </body>
 </html>

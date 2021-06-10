@@ -188,3 +188,7 @@
         </ul>
     </nav>
 </div>
+
+<?php 
+    include("./pages/footer.php")
+?>
