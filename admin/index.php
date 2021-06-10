@@ -114,7 +114,10 @@
               case 'logout':
                 // include './pages/login.php';
                 // header('Location: ./pages/logout.php');
-                break;    
+                break;   
+              case 'image':
+                include './pages/image.php';
+                break; 
               default: break;    
             }
           ?>

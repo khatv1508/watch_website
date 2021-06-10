@@ -3,13 +3,21 @@
     $perPage = 10;
     $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
 
-    $sql = "SELECT hd.*
+    $sql = "SELECT dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, dh.tongTien, sp.tenSP, hd.idHoaDon
             FROM hoadon hd
+            LEFT JOIN dathang dh ON (hd.idPhieu = dh.idPhieu)
+            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
+            GROUP BY dh.tenKH
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
-    $sql = "SELECT hd.*
-            FROM hoadon hd";
+    $sql = "SELECT dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, dh.tongTien, sp.tenSP, hd.idHoaDon
+            FROM hoadon hd
+            LEFT JOIN dathang dh ON (hd.idPhieu = dh.idPhieu)
+            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
+            GROUP BY dh.tenKH";
 
     $x = mysqli_query($conn, $sql);
     $total = mysqli_num_rows($x);
@@ -33,35 +41,35 @@
                 <div class="item-wrapper">
                     <div class="header-tool">
                         <p class="grid-header">Danh Sách Hóa Đơn</p>
-                        <div>
-                            <div class="btn btn-refresh-product has-icon btn-rounded">
+                        <!-- <div>
+                            <div class="btn btn-refresh-bill has-icon btn-rounded">
                                 <i class="mdi mdi-refresh"></i>
                                 <a href="#">Làm Mới</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="table-responsive">
                         <table class="table info-table">
                             <thead>
                                 <tr>
                                     <th>Tên Khách Hàng</th>
-                                    <th>Mã Sản Phẩm</th>
-                                    <th>Tên Sản Phẩm</th>
+                                    <th>Số ĐT</th>
+                                    <th>Địa Chỉ</th>
                                     <th>Số Lượng</th>
-                                    <th>Giá Sản Phẩm </th>
+                                    <th>Tổng Tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php while ($row = mysqli_fetch_array($result)) { ?>   
                                     <tr>
                                         <td><?php echo $row["tenKH"]; ?></td>
-                                        <td><?php echo $row["maSP"]; ?></td>
-                                        <td><?php echo $row["tenSP"];?></td>
-                                        <td><?php echo $row["soluong"]; ?></td>
-                                        <td><?php echo $row["giaSP"];?></td>
-                                        <!-- <td class="actions">
-                                            <a href="/pages/view.php?id=<?=$row["idHoaDon"];?>"><i class="mdi mdi-eye"></i></a>
-                                        </td> -->
+                                        <td><?php echo $row["sdt"]; ?></td>
+                                        <td><?php echo $row["diaChi"];?></td>
+                                        <td><?php echo $row["tongSoLuong"]; ?></td>
+                                        <td><?php echo $row["tongTien"];?></td>
+                                        <td class="actions">
+                                            <a href="/pages/view.php?page=bill&type=view&id=<?=$row["idHoaDon"]?>"><i class="mdi mdi-eye"></i></a>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

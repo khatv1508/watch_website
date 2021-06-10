@@ -4,13 +4,13 @@
     $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
     
     // do du lieu
-    $sql = "SELECT sp.idSP, sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soluong, nk.dvt, sp.giaSP
+    $sql = "SELECT sp.idSP, sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soLuong, nk.dvt, sp.giaSP
             FROM sanpham sp
             LEFT JOIN nhapkho nk ON (sp.idSP = nk.idSP) 
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
-    $sql = "SELECT sp.idSP, sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soluong, nk.dvt, sp.giaSP
+    $sql = "SELECT sp.idSP, sp.maSP, sp.hangSP, sp.tenSP, sp.loai, nk.soLuong, nk.dvt, sp.giaSP
             FROM sanpham sp
             LEFT JOIN nhapkho nk ON (sp.idSP = nk.idSP)"; 
 
@@ -51,17 +51,14 @@
                 if ($result1 = mysqli_query($conn, $insert_product) === TRUE ) {
                     $idSP = $conn->insert_id;
                     
-                    if(isset($_POST["soluong"])) { $soLuong = $_POST['soluong']; }
+                    if(isset($_POST["soLuong"])) { $soLuong = $_POST['soLuong']; }
                     if(isset($_POST["dvt"])) { $dvt = $_POST['dvt']; }
                     if(isset($_POST["ngaynhap"])) { $ngayNhap = $_POST['ngaynhap']; }
                     // insert nhap kho
-                    $inser_Warehouse ="INSERT INTO nhapkho(idSP, maSP, soluong, dvt, ngayNhap) VALUES ($idSP, '$maSP', $soLuong, '$dvt', '$ngayNhap');";
+                    $inser_Warehouse ="INSERT INTO nhapkho(idSP, maSP, soLuong, dvt, ngayNhap) VALUES ($idSP, '$maSP', $soLuong, '$dvt', '$ngayNhap');";
                 }
 
                 if ($result2 = mysqli_query($conn, $inser_Warehouse) === TRUE ) {
-                    // $idSP = $conn->insert_id;
-
-                    // if(isset($_POST["soluong"])) { $soLuong = $_POST['soluong']; }
                     echo 
                     '<div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>Thêm sản phẩm thành công</strong>
@@ -111,10 +108,10 @@
                                         giaSP = '$gia' 
                                     WHERE idSP = $id";
                 if ($result1=mysqli_query($conn, $update_product) === TRUE ) {
-                    if(isset($_POST["soluong"])) { $soLuong = $_POST['soluong']; }
+                    if(isset($_POST["soLuong"])) { $soLuong = $_POST['soLuong']; }
 
                     $update_Warehouse = "UPDATE nhapkho 
-                                        SET soluong = '$soLuong'
+                                        SET soLuong = '$soLuong'
                                         WHERE idSP = $id";
                 }
                 if ($result2 = mysqli_query($conn, $update_Warehouse) === TRUE ) {
@@ -162,6 +159,19 @@
                 </div>';
             }
             break;
+
+        case 'image':
+            // $insert_image = "INSERT INTO anhsanpham(idSP, urlImage) VALUES ($id, $urlImage);";
+            // if (mysqli_query($conn, $insert_image) === TRUE ) {
+            //     echo 
+            //     '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            //         <strong>Upload ảnh thành công</strong>
+            //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //         <span aria-hidden="true">&times;</span>
+            //         </button>
+            //     </div>';
+            // }
+            break;    
         
         default: 
             break;           
@@ -216,11 +226,14 @@
                                         <td><?php echo $row["hangSP"]; ?></td>
                                         <td><?php echo $row["tenSP"];?></td>
                                         <td><?php echo $row["loai"]; ?></td>
-                                        <td><?php echo $row["soluong"]; ?></td>
+                                        <td><?php echo $row["soLuong"]; ?></td>
                                         <td><?php echo $row["dvt"];?></td>
                                         <td><?php echo $row["giaSP"];?></td>
                                         <td class="actions">
                                             <a href="/pages/edit.php?id=<?=$row["idSP"];?>&type=edit"><i class="mdi mdi-pencil"></i></a>
+                                        </td>
+                                        <td class="actions">
+                                            <a href="/pagesindex.php?page=image&id=<?=$row["idSP"];?>&type=image"><i class="mdi mdi-file-image"></i></a>
                                         </td>
                                         <td class="actions">
                                             <a href="/pages/index.php?page=product&id=<?=$row["idSP"];?>&type=delete"><i class="mdi mdi-window-close"></i></a>

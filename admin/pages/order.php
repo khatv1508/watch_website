@@ -3,14 +3,22 @@
     $perPage = 10;
     $page = isset($_GET['pageNum']) ? $_GET['pageNum'] : 1;
 
-    $sql = "SELECT dh.*
-            FROM dathang dh
+    $sql = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, sp.maSP, sp.tenSP, dh.tongSoLuong, 
+                    dh.tongTien, dh.trangThai
+            FROM dathang dh 
+            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
             WHERE trangThai = 1
+            GROUP BY dh.tenKH
             LIMIT ".$perPage." OFFSET ". (($page * $perPage ) - $perPage);
     $result = mysqli_query($conn, $sql);
 
-    $sql = "SELECT dh.*
-            FROM dathang dh";
+    $sql = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, sp.maSP, sp.tenSP, dh.tongSoLuong, 
+                    dh.tongTien, dh.trangThai
+            FROM dathang dh 
+            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
+            GROUP BY dh.tenKH";
 
     $x = mysqli_query($conn, $sql);
     $total = mysqli_num_rows($x);
@@ -24,19 +32,22 @@
     $type = isset($_GET['type']) ? $_GET['type'] : '';
     switch($type){
         case 'check';
-            $tenKH = ''; $idSP = ''; $maSP = ''; $tenSP = ''; $soLuong = ''; $gia = ''; 
-            // get thong don hang
-            $select_order = "SELECT dh.*
-                    FROM dathang dh
-                    WHERE idPhieu = ".$id; 
+            $idSP = ''; 
+            // get don hang
+            $select_order = "SELECT dh.idPhieu, dh.tenKH, dh.sdt, dh.diaChi, dh.tongSoLuong, 
+                                    dh.tongTien, dh.trangThai
+                            FROM dathang dh 
+                            LEFT JOIN thongtindathang tt ON (dh.idPhieu = tt.idPhieu)
+                            LEFT JOIN sanpham sp ON (tt.idSP = sp.idSP)
+                            WHERE dh.idPhieu = ".$id;
             $result = mysqli_query($conn, $select_order); 
-            $value = $result->fetch_object();      
+            $value = $result->fetch_object();
+
             
 
-            $insert_bill = "INSERT INTO hoadon(idPhieu, tenKH, idSP, maSP, tenSP, soluong, giaSP) 
-                            VALUES ( $id, '$value->tenKH', $value->idSP, '$value->maSP', '$value->tenSP', $value->soluong, $value->giaSP);";
-            // var_dump($insert_bill);
-            // exit;
+            $insert_bill = "INSERT INTO hoadon(idPhieu) 
+                            VALUES ($id);";
+            
             if (mysqli_query($conn, $insert_bill) === TRUE ) {
                 // update trang thai
                 $update_product = "UPDATE dathang 
@@ -44,21 +55,32 @@
                                     WHERE idPhieu = ".$id;
 
                 if (mysqli_query($conn, $update_product) === TRUE){
-                    echo 
-                    '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Thành công</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
-                } else {
-                    echo 
-                    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Đã xảy ra lỗi !!!</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
+
+                    $select_infomation = "SELECT * FROM thongtindathang WHERE idPhieu = ".$id;
+                    $result1 = mysqli_query($conn, $select_infomation);
+
+                    try{
+                        while ($row = mysqli_fetch_array($result1)){
+                            $update_warehouse = "UPDATE nhapkho
+                                                    SET soLuong = soLuong - ".$row["soLuong"]."
+                                                    WHERE idSP = ".$row["idSP"];
+                            mysqli_query($conn, $update_warehouse);
+                        } 
+                        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Thành công</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>';   
+                    }
+                    catch(Exception $e) {
+                        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Đã xảy ra lỗi !!!</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>';
+                    }
                 }
             }
             break;
@@ -120,10 +142,8 @@
                                     <th>tên Khách Hàng</th>
                                     <th>SDT khách Hàng</th>
                                     <th>Địa Chỉ</th>
-                                    <th>Mã sản Phẩm</th>
-                                    <th>Tên sản Phẩm</th>
                                     <th>Số Lượng</th>
-                                    <th>Giá Sản Phẩm </th>
+                                    <th>Tổng Tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -132,10 +152,8 @@
                                         <td><?php echo $row["tenKH"]; ?></td>
                                         <td><?php echo $row["sdt"]; ?></td>
                                         <td><?php echo $row["diaChi"];?></td>
-                                        <td><?php echo $row["maSP"]; ?></td>
-                                        <td><?php echo $row["tenSP"]; ?></td>
-                                        <td><?php echo $row["soluong"];?></td>
-                                        <td><?php echo $row["giaSP"];?></td>
+                                        <td><?php echo $row["tongSoLuong"];?></td>
+                                        <td><?php echo $row["tongTien"];?></td>
                                         <td class="actions">
                                             <a href="/pages/index.php?page=order&type=check&id=<?=$row["idPhieu"]?>"><i class="mdi mdi-check"></i></a>
                                         </td>
